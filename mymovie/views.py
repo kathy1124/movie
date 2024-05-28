@@ -223,7 +223,6 @@ def editMember(request):
 
 from .forms import MemberRegisterForm, MemberLoginForm
 from django.contrib.auth.hashers import make_password
-
 def registerMember(request):
     if request.method == 'POST':
         register_form = MemberRegisterForm(request.POST)
@@ -250,14 +249,13 @@ def registerMember(request):
         register_form = MemberRegisterForm()
     return render(request, 'user_register.html', locals())
 
-from django.contrib.auth import authenticate, login
 from django.contrib.auth.hashers import check_password
 
 def loginMember(request):
     if request.method == 'GET':
         form = MemberLoginForm()
         return render(request, 'user_login.html', {'form': form})
-        
+         
     elif request.method == 'POST':
         form = MemberLoginForm(request.POST)
         if form.is_valid():
@@ -267,19 +265,23 @@ def loginMember(request):
             try:
                 member = Member_data.objects.get(member_account=member_id)
                 if check_password(member_pw, member.member_password):
+                    # 这里没有使用 Django 内置的用户系统，手动登录
                     request.session['member_id'] = member_id
                     message = '成功登入了'
                     return redirect('/lookMember/')
                 else:
                     message = '登入失敗'
             except Member_data.DoesNotExist:
-                message = '登入失敗'
+                message = '沒有此帳號'
         else:
             message = '表單內容有誤'
         return render(request, 'user_login.html', {'form': form, 'message': message})
     else:
         message = '錯誤的請求方法'
     return render(request, 'user_login.html', {'form': form, 'message': message})
+
+def forgetMember(request):
+    return render(request, 'user_forget.html', locals())
 
 
 from .forms import MemberForgetForm

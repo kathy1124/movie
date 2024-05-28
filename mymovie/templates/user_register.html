@@ -1,46 +1,43 @@
+{% extends "user_relogBase.html" %}
 
-    {% extends "user_relogBase.html" %}
-
-    {% block title %} 註冊會員 {% endblock %}
-    
-    {% block headmessage %} 
-    <a style='font-family:標楷體; font-size: 19pt'> 註冊會員 </a>
-    {% endblock %}
-    
-    {% block content %}
-    {% if message %}
-        <div class='alert alert-warning'>{{ message }}</div>
-    {% endif %}
-    <form action="" method="post">
-        {% csrf_token %}
-    
-        <label for='member_id'>帳號：</label>
-        <input id='member_id' type='text' name='member_id' required>
-        <br/>
-        <label for='member_pw'>密碼：</label>
-        <input id='member_pw' type='password' name='member_pw' required>
-        <br/>
-        <label for='member_pwc'>確認密碼：</label>
-        <input id='member_pwc' type='password' name='member_pwc' required>
-        <br/>
-        <a style='font-size:12px'>6-20位英數混合，英文區分大小寫</a>
-        <br/>
-        <label for='member_mail'>電子信箱：</label>
-        <input id='member_mail' type='email' name='member_mail' required>
-        <br/>
-        <label for='member_phone'>手機號碼：</label>
-        <input id='member_phone' type='tel' name='member_phone' required>
-        <br/>
-        <input type='submit' value='註冊'>
-    </form>
-    <script>
-        function go_delete(id){
-            //var user_pass = document.getElementById('user_pass').value;
-            //if (user_pass != "") {
-            var usr = 'delpost/' + id;
-            window.location = usr;
-            //}
-        }
-    </script>
-    {% endblock content %}
-    
+{% block title %} 註冊會員 {% endblock title %}
+{% block headmessage %} 
+<a style='font-family:標楷體; font-size: 19pt'> 註冊會員 </a>
+{% endblock %}
+{% block content %}
+{% if message %}
+    <div class='alert alert-warning'>{{ message }}</div>
+{% endif %}
+<form action="" method="post">
+    {% csrf_token %}
+    <label for='member_id'>帳號：</label>
+    <input id='member_id' type='text' name='member_id' required>
+    <br/>
+    <label for='member_pw'>密碼：</label>
+    <input id='member_pw' type='password' name='member_pw'>
+    <br/>
+    <label for='member_pwc'>確認密碼：</label>
+    <input id='member_pwc' type='password' name='member_pwc'>
+    <br/>
+    <a style='font-size:12px'>6-20位英數混合，英文區分大小寫</a>
+    <br/>
+    <label for='member_mail'>電子信箱</label>
+    <input id='member_mail' type='text' name='member_mail'>
+    <br/>
+    <label for='member_phone'>手機號碼</label>
+    <input id='member_phone' type='text' name='member_phone'>
+    <br/>
+    <input type='submit' name='submit' value='註冊'>
+</form>
+</body>
+</html> 
+<script>
+    function go_delete(id){
+        //var user_pass = document.getElementById('user_pass').value;
+        //if (user_pass != "") {
+        var usr = 'delpost/' + id;
+        window.location = usr;
+        //}
+    }
+</script>
+{% endblock content %}

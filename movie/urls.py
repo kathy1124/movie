@@ -46,6 +46,11 @@ urlpatterns = [
     path('searchMember/',mv.searchMember, name='searchMember'),
     path('searchMemberDetails/',mv.searchMemberDetails, name='searchMemberDetails'),
     
+    #登入註冊忘記密碼
+    path('registerMember/',mv.registerMember, name='registerMember'),
+    path('loginMember/',mv.loginMember, name='loginMember'),
+    path('forgetMember/',mv.forgetMember, name='forgetMember'),
+
 
 
     #-----------------------------------------------------------
