@@ -1,9 +1,9 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from .models import Member_data, Ticket, Movie, Staff_data, Session
-
+from .forms import MovieForm, MemberEditForm, MemberRegisterForm, MemberLoginForm, MemberForgetForm
 # 首頁
 def home(request):
-    return render(request, 'base.html')
+    return redirect ('/loginMember/')
 
 # Manager
 # 新增電影
@@ -60,7 +60,6 @@ def deleteMovie(request, movie_no):
     return redirect('searchMovie')
 
 # 編輯電影
-from .forms import MovieForm   
 def editMovie(request, movie_no):
     movie_instance = get_object_or_404(Movie, movie_no=movie_no)    
     if request.method == 'POST':
@@ -166,23 +165,8 @@ def searchMemberDetails(request):
 
 
 
-# 查看會員資訊
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.decorators import login_required
-@login_required
-def login_view(request):
-    if request.method == 'POST':
-        member_account = request.POST['member_account']
-        member_password = request.POST['member_password']
-        user = authenticate(request, username=member_account, password=member_password)
-        if user is not None:
-            login(request, user)
-            return redirect('user_lookMember')
-        else:
-            return render(request, 'login.html', locals())
-    else:
-        return render(request, 'login.html')
 
+# 查看會員資訊
 def lookMember(request):
     try:
         member_id = request.session.get('member_id')
@@ -195,10 +179,6 @@ def lookMember(request):
         return redirect('/loginMember/')
 
 # 編輯會員
-from django.contrib.auth.decorators import login_required
-from .forms import MemberEditForm
-
-
 def editMember(request):
     member_id = request.session.get('member_id')
     if not member_id:
@@ -220,9 +200,8 @@ def editMember(request):
     return render(request, 'user_editMember.html', {'form': form})
 
 
-
-from .forms import MemberRegisterForm, MemberLoginForm
-from django.contrib.auth.hashers import make_password
+# 註冊會員
+from django.contrib.auth.hashers import make_password, check_password
 def registerMember(request):
     if request.method == 'POST':
         register_form = MemberRegisterForm(request.POST)
@@ -249,8 +228,7 @@ def registerMember(request):
         register_form = MemberRegisterForm()
     return render(request, 'user_register.html', locals())
 
-from django.contrib.auth.hashers import check_password
-
+#登入會員
 def loginMember(request):
     if request.method == 'GET':
         form = MemberLoginForm()
@@ -261,11 +239,9 @@ def loginMember(request):
         if form.is_valid():
             member_id = form.cleaned_data['member_id'].strip()
             member_pw = form.cleaned_data['member_pw']
-            print(f'member_id:{member_id}, password: {member_pw}')
             try:
                 member = Member_data.objects.get(member_account=member_id)
                 if check_password(member_pw, member.member_password):
-                    # 这里没有使用 Django 内置的用户系统，手动登录
                     request.session['member_id'] = member_id
                     message = '成功登入了'
                     return redirect('/lookMember/')
@@ -283,9 +259,7 @@ def loginMember(request):
 def forgetMember(request):
     return render(request, 'user_forget.html', locals())
 
-
-from .forms import MemberForgetForm
-
+# 忘記密碼
 def forgetMember(request):
     if request.method == 'POST':
         form = MemberForgetForm(request.POST)
@@ -310,7 +284,7 @@ def forgetMember(request):
         form = MemberForgetForm()
     return render(request, 'user_forget.html', {'form': form})
 
-
+# 登出
 from django.contrib.auth import logout
 def logout_view(request):
     logout(request)
