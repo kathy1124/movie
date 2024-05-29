@@ -10,7 +10,7 @@ from django.db import models
 class Member_data(models.Model):
     member_no = models.AutoField(primary_key=True)
     member_account = models.CharField(max_length=25, unique=True)
-    member_password = models.CharField(max_length=10)
+    member_password = models.CharField(max_length=25)
     gmail = models.EmailField()
     phone_number = models.CharField(max_length=15)
     
@@ -32,7 +32,7 @@ class Member_data(models.Model):
 class Session(models.Model):
     session_no = models.AutoField(primary_key=True)
     movie = models.ForeignKey('Movie', on_delete=models.CASCADE)
-    session = models.CharField(max_length=200)
+    session = models.CharField(max_length=20)
 
     def __str__(self):
         return f"{self.movie.movie_name} - {self.session}"
@@ -59,11 +59,11 @@ class Movie(models.Model):
     movie_no = models.AutoField(primary_key=True)
     movie_name = models.CharField(max_length=200)
     date = models.DateField()
-    show = models.CharField(max_length=200, choices=CHOICES)
-    director = models.CharField(max_length=200)
+    show = models.CharField(max_length=20, choices=CHOICES)
+    director = models.CharField(max_length=20)
     actor = models.CharField(max_length=200)
-    type = models.CharField(max_length=200)
-    length = models.CharField(max_length=200)
+    type = models.CharField(max_length=100)
+    length = models.CharField(max_length=100)
     picture = models.CharField(max_length=500)
     change_staff = models.ForeignKey('Staff_data', on_delete=models.CASCADE)
     def __str__(self):
@@ -76,8 +76,8 @@ class Staff_data(models.Model):
         ('hr', '人事部門')
     )
     staff_no = models.AutoField(primary_key=True)
-    staff_password = models.CharField(max_length=200)
-    staff_name = models.CharField(max_length=200)
-    staff_department = models.CharField(max_length=200, choices=CHOICES)
+    staff_password = models.CharField(max_length=25)
+    staff_name = models.CharField(max_length=20)
+    staff_department = models.CharField(max_length=20, choices=CHOICES)
     def __str__(self):
         return self.staff_name
