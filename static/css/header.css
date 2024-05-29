@@ -1,39 +1,48 @@
-/* header.css */
 body, html {
     height: 100%;
     margin: 0;
 }
 
 .head {
+    
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #D5DDE2;
     padding: 10px 20px;
-    
-    border-bottom: 1px solid black; /* 添加底部邊框 */
+    border-bottom: 1px solid black;
+
 }
+
+/* 確保選擇到正確的元素 */
+nav.head a[href="{% url 'searchMovie' %}"] {
+    color: black;
+}
+nav.head a[href="{% url 'lookMember' %}"] {
+    color: black;
+}
+
 
 .head img {
     height: 40px;
-    flex: 0; /* 使圖片占一等分 */
+    flex: 0;
 }
 
-.head p {
+.head a {
     flex: 1;
     text-align: center;
     margin: 0;
-    top: 50 ;
     padding: 10px;
     font-size: 24px;
-    height: 0%;
-    border-left: 1px solid black; /* 添加左邊黑線 */
-}
-.head p:first-child {
-    border-left: none; /* 移除第一個元素的左邊黑線 */
+    border-left: 1px solid black;
+    
 }
 
-.head p:hover {
+.head a:first-child {
+    border-left: none;
+}
+
+.head a:hover {
     background-color: #e9ecef;
     cursor: pointer;
 }
@@ -41,18 +50,17 @@ body, html {
 .main-content {
     display: flex;
     justify-content: center;
-    align-items:center;
+    align-items: center;
     text-align: center;
-    height: calc(100% - 60px); /* 減去導航欄的高度 */
+    height: calc(100% - 60px); /* 减去导航栏的高度 */
     background-color: #E7E7E7;
 }
 
-.main-content p {
+.main-content a {
     font-size: 30px;
     margin: 0;
     height: 70px;
-    /* margin-top: 10; */
-    text-align: center;
-    display: flex; /* ★ */
-    align-items: center; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
