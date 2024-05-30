@@ -4,11 +4,13 @@
    <p style="font-size: 30px;margin: 0; height: 70px;text-align: center; display: flex;align-items: center; "> 編輯會員資料</p>
 </div>
 {% endblock %}
-
 {% block content%}
-<h1>編輯會員資料</h1>
+
 <form method="post">
-    {% csrf_token %}
+{% if message %}
+    <div class='alert alert-warning'>{{ message }}</div>
+{% endif %}
+{% csrf_token %}
     {{ form.as_p }}
     <button type="submit">儲存更改</button>
 </form>

@@ -29,6 +29,7 @@ nav.head a[href="{% url 'lookMember' %}"] {
 }
 
 .head a {
+    color: black;
     flex: 1;
     text-align: center;
     margin: 0;

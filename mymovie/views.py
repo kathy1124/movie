@@ -161,6 +161,7 @@ def searchMemberDetails(request):
 # 電影資訊
 # def movieInformation(request,movie_id)
 
+
 # 快速購票
 
 
