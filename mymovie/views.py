@@ -1,11 +1,107 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from .models import Member_data, Ticket, Movie, Staff_data, Session
-from .forms import MovieForm, MemberEditForm, MemberRegisterForm, MemberLoginForm, MemberForgetForm
+from .forms import MovieForm, MemberEditForm, MemberRegisterForm, MemberLoginForm, MemberForgetForm, ManagerRegisterForm, ManagerLoginForm, ManagerForgetForm
 # 首頁
 def home(request):
     return redirect ('/loginMember/')
 
+#-------------------------------------------------------------------------------------------------------------
 # Manager
+# 註冊
+def registerManager(request):
+    CHOICES = (
+        ('it', 'IT部門'),
+        ('hr', '人事部門')
+    )    
+    message =""
+    if request.method == 'POST':
+        register_form = ManagerRegisterForm(request.POST)
+        if register_form.is_valid():
+            manager_id = register_form.cleaned_data['manager_id'].strip()
+            manager_name = register_form.cleaned_data['manager_name']
+            manager_department = register_form.cleaned_data['manager_department']
+            manager_pw = register_form.cleaned_data['manager_pw']
+            manager_pwc = register_form.cleaned_data['manager_pwc']
+            
+            if manager_pw == manager_pwc:
+                if not Staff_data.objects.filter(staff_no=manager_id).exists():
+                    pw = make_password(manager_pw)
+                    manager = Staff_data.create_manager_data(manager_id, pw, manager_department, manager_name)
+                    manager.save()
+                    message = "註冊成功! 請點選「會員中心」進行登入"
+                else:
+                    message = "帳號已經存在"
+            else:
+                message = "密碼不一致"
+        else:
+            message = "請檢查輸入的欄位內容"
+    else:
+        register_form = ManagerRegisterForm()
+    return render(request, 'manager_register.html', {'form': register_form, 'message': message, 'CHOICES':CHOICES})
+
+# 登入
+def loginManager(request):
+    if request.method == 'GET':
+        form = ManagerLoginForm()
+        return render(request, 'manager_login.html', {'form': form})
+    
+    elif request.method == 'POST':
+        form = ManagerLoginForm(request.POST)
+        if form.is_valid():
+            manager_id = form.cleaned_data['manager_id'].strip()
+            manager_pw = form.cleaned_data['manager_pw']
+            print(f'manager_id:{manager_id}, password: {manager_pw}')
+            try:
+                manager = Staff_data.objects.get(staff_account=manager_id)
+                if check_password(manager_pw, manager.staff_password):
+                    request.session['manager_id'] = manager_id
+                    message = '成功登入了'
+                    return redirect('/searchMovie/')
+                else:
+                    message = '登入失敗'
+            except Staff_data.DoesNotExist:
+                message = '沒有此帳號'
+        else:
+            print(form.errors)
+            # message = '表單內容有誤'
+            message = '表單內容有誤: {}'.format(form.errors)
+        return render(request, 'manager_login.html', {'form': form, 'message': message})
+    else:
+        message = '錯誤的請求方法'
+    return render(request, 'manager_login.html', locals())
+
+# 忘記密碼
+def forgetManager(request):
+    if request.method == 'POST':
+        form = ManagerForgetForm(request.POST)
+        if form.is_valid():
+            manager_id = form.cleaned_data['manager_id'].strip()
+            manager_pw = form.cleaned_data['manager_pw']
+            manager_cpw = form.cleaned_data['manager_cpw']
+            if manager_pw == manager_cpw:
+                try:
+                    manager = Staff_data.objects.get(staff_account=manager_id)
+                    manager.staff_password = make_password(manager_pw)
+                    manager.save()
+                    message = "成功更改密碼 請重新登入"
+                    #return redirect('/loginMember/')
+                except Staff_data.DoesNotExist:
+                    message = "此帳號不存在"
+            else:
+                message = "新密碼與確認新密碼不一致"
+        else:
+            message = "表單內容有誤"
+        return render(request, 'manager_forget.html', {'form': form, 'message': message})
+    else:
+        form = ManagerForgetForm()
+    return render(request, 'manager_forget.html', locals())
+
+# 登出
+from django.contrib.auth import logout
+def logout_view(request):
+    logout(request)
+    return redirect('/loginMember/')
+
 # 新增電影
 def addMovie(request):
     CHOICES = ('即將上映', '現正熱映')
@@ -74,7 +170,7 @@ def editMovie(request, movie_no):
         'movie_instance': movie_instance,
     }
     return render(request, 'manager_editMovie.html', context) 
-    
+
 # 搜尋電影
 from .filters import MovieFilter,MemberFilter
 def searchMovie(request):
@@ -90,23 +186,18 @@ def showMovie(request, movie_no):
     movie = Movie.objects.get(movie_no=movie_no)
     ses = Session.objects.filter(movie=movie_no)
     return render(request, 'manager_showMovie.html', locals())
-# request.method == "POST" 用於處理需要提交資料並可能修改伺服器狀態的請求(處理表單提交等資料的傳送)
-# request.method == "GET"  用於從伺服器獲取資源的請求，且通常用於獲取較小且不敏感的資料。
 
 # 會員購票紀錄
 def search_member_info(member_no):
     try:
         member = Member_data.objects.get(member_no=member_no)
-        # 會員的訂票
         tickets = Ticket.objects.filter(ticket_member=member)
-        # 字典
         result = {
             'member_account': member.member_account,
             'gmail': member.gmail,
             'phone_number': member.phone_number,
             'tickets': [],
         }
-        # 定義 payment_method 
         payment_method_display = {
             'money': '現金',
             'credit_card': '信用卡'
@@ -153,10 +244,88 @@ def searchMemberDetails(request):
     }
     return render(request, 'manager_searchMemberDetails.html', locals())   
 
-
-
 #---------------------------------------------------------------------------------------------------------------
 # User
+# 註冊
+from django.contrib.auth.hashers import make_password, check_password
+def registerMember(request):
+    if request.method == 'POST':
+        register_form = MemberRegisterForm(request.POST)
+        if register_form.is_valid():
+            member_id = register_form.cleaned_data['member_id'].strip()
+            member_pw = register_form.cleaned_data['member_pw']
+            member_pwc = register_form.cleaned_data['member_pwc']
+            member_mail = register_form.cleaned_data['member_mail']
+            member_phone = register_form.cleaned_data['member_phone']
+            
+            if member_pw == member_pwc:
+                if not Member_data.objects.filter(member_account=member_id).exists():
+                    pw = make_password(member_pw)
+                    member = Member_data.create_member_data(member_id, pw, member_mail, member_phone)
+                    member.save()
+                    message = "註冊成功! 請點選「返回登入」進行登入"
+                else:
+                    message = "帳號已經存在"
+            else:
+                message = "密碼不一致"
+        else:
+            message = "請檢查輸入的欄位內容"
+    else:
+        register_form = MemberRegisterForm()
+    return render(request, 'user_register.html', locals())
+
+#登入會員
+def loginMember(request):
+    if request.method == 'GET':
+        form = MemberLoginForm()
+        return render(request, 'user_login.html', {'form': form})
+        
+    elif request.method == 'POST':
+        form = MemberLoginForm(request.POST)
+        if form.is_valid():
+            member_id = form.cleaned_data['member_id'].strip()
+            member_pw = form.cleaned_data['member_pw']
+            try:
+                member = Member_data.objects.get(member_account=member_id)
+                if check_password(member_pw, member.member_password):
+                    request.session['member_id'] = member_id
+                    message = '成功登入了'
+                    return redirect('/lookMember/')
+                else:
+                    message = '登入失敗'
+            except Member_data.DoesNotExist:
+                message = '沒有此帳號'
+        else:
+            message = '表單內容有誤'
+        return render(request, 'user_login.html', {'form': form, 'message': message})
+    else:
+        message = '錯誤的請求方法'
+    return render(request, 'user_login.html', {'form': form, 'message': message})
+
+# 忘記密碼
+def forgetMember(request):
+    if request.method == 'POST':
+        form = MemberForgetForm(request.POST)
+        if form.is_valid():
+            member_id = form.cleaned_data['member_id'].strip()
+            member_pw = form.cleaned_data['member_pw']
+            member_cpw = form.cleaned_data['member_cpw']
+            if member_pw == member_cpw:
+                try:
+                    member = Member_data.objects.get(member_account=member_id)
+                    member.member_password = make_password(member_pw)
+                    member.save()
+                    return redirect('/loginMember/')
+                except Member_data.DoesNotExist:
+                    message = "帳號不存在"
+            else:
+                message = "新密碼與確認新密碼不一致"
+        else:
+            message = "表單內容有誤"
+        return render(request, 'user_forget.html', {'form': form, 'message': message})
+    else:
+        form = MemberForgetForm()
+    return render(request, 'user_forget.html', {'form': form})
 
 # 電影資訊
 # def movieInformation(request,movie_id)
@@ -197,193 +366,6 @@ def editMember(request):
             return redirect('/lookMember/')
     else:
         form = MemberEditForm(instance=member)
-    
     return render(request, 'user_editMember.html', {'form': form})
 
 
-# 註冊會員
-from django.contrib.auth.hashers import make_password, check_password
-def registerMember(request):
-    if request.method == 'POST':
-        register_form = MemberRegisterForm(request.POST)
-        if register_form.is_valid():
-            member_id = register_form.cleaned_data['member_id'].strip()
-            member_pw = register_form.cleaned_data['member_pw']
-            member_pwc = register_form.cleaned_data['member_pwc']
-            member_mail = register_form.cleaned_data['member_mail']
-            member_phone = register_form.cleaned_data['member_phone']
-            
-            if member_pw == member_pwc:
-                if not Member_data.objects.filter(member_account=member_id).exists():
-                    pw = make_password(member_pw)
-                    member = Member_data.create_member_data(member_id, pw, member_mail, member_phone)
-                    member.save()
-                    message = "註冊成功! 請點選「返回登入」進行登入"
-                else:
-                    message = "帳號已經存在"
-            else:
-                message = "密碼不一致"
-        else:
-            message = "請檢查輸入的欄位內容"
-    else:
-        register_form = MemberRegisterForm()
-    return render(request, 'user_register.html', locals())
-
-#登入會員
-def loginMember(request):
-    if request.method == 'GET':
-        form = MemberLoginForm()
-        return render(request, 'user_login.html', {'form': form})
-         
-    elif request.method == 'POST':
-        form = MemberLoginForm(request.POST)
-        if form.is_valid():
-            member_id = form.cleaned_data['member_id'].strip()
-            member_pw = form.cleaned_data['member_pw']
-            try:
-                member = Member_data.objects.get(member_account=member_id)
-                if check_password(member_pw, member.member_password):
-                    request.session['member_id'] = member_id
-                    message = '成功登入了'
-                    return redirect('/lookMember/')
-                else:
-                    message = '登入失敗'
-            except Member_data.DoesNotExist:
-                message = '沒有此帳號'
-        else:
-            message = '表單內容有誤'
-        return render(request, 'user_login.html', {'form': form, 'message': message})
-    else:
-        message = '錯誤的請求方法'
-    return render(request, 'user_login.html', {'form': form, 'message': message})
-
-def forgetMember(request):
-    return render(request, 'user_forget.html', locals())
-
-# 忘記密碼
-def forgetMember(request):
-    if request.method == 'POST':
-        form = MemberForgetForm(request.POST)
-        if form.is_valid():
-            member_id = form.cleaned_data['member_id'].strip()
-            member_pw = form.cleaned_data['member_pw']
-            member_cpw = form.cleaned_data['member_cpw']
-            if member_pw == member_cpw:
-                try:
-                    member = Member_data.objects.get(member_account=member_id)
-                    member.member_password = make_password(member_pw)
-                    member.save()
-                    return redirect('/loginMember/')
-                except Member_data.DoesNotExist:
-                    message = "帳號不存在"
-            else:
-                message = "新密碼與確認新密碼不一致"
-        else:
-            message = "表單內容有誤"
-        return render(request, 'user_forget.html', {'form': form, 'message': message})
-    else:
-        form = MemberForgetForm()
-    return render(request, 'user_forget.html', {'form': form})
-from .forms import ManagerRegisterForm, ManagerLoginForm, ManagerForgetForm
-#-------------------------------------------------------------------------------------------------------------
-#員工註冊
-#-------------------------------------------------------------------------------------------------------------
-def registerManager(request):
-    CHOICES = (
-        ('it', 'IT部門'),
-        ('hr', '人事部門')
-    )    
-    message =""
-    if request.method == 'POST':
-        register_form = ManagerRegisterForm(request.POST)
-        if register_form.is_valid():
-            manager_id = register_form.cleaned_data['manager_id'].strip()
-            manager_name = register_form.cleaned_data['manager_name']
-            manager_department = register_form.cleaned_data['manager_department']
-            manager_pw = register_form.cleaned_data['manager_pw']
-            manager_pwc = register_form.cleaned_data['manager_pwc']
-            
-            if manager_pw == manager_pwc:
-                if not Staff_data.objects.filter(staff_no=manager_id).exists():
-                    pw = make_password(manager_pw)
-                    manager = Staff_data.create_manager_data(manager_id, pw, manager_department, manager_name)
-                    manager.save()
-                    message = "註冊成功! 請點選「會員中心」進行登入"
-                else:
-                    message = "帳號已經存在"
-            else:
-                message = "密碼不一致"
-        else:
-            message = "請檢查輸入的欄位內容"
-    else:
-        register_form = ManagerRegisterForm()
-    return render(request, 'manager_register.html', {'form': register_form, 'message': message, 'CHOICES':CHOICES})
-#-------------------------------------------------------------------------------------------------------------
-#員工登入
-#-------------------------------------------------------------------------------------------------------------
-from django.contrib import messages
-
-def loginManager(request):
-    if request.method == 'GET':
-        form = ManagerLoginForm()
-        return render(request, 'manager_login.html', {'form': form})
-         
-    elif request.method == 'POST':
-        form = ManagerLoginForm(request.POST)
-        if form.is_valid():
-            manager_id = form.cleaned_data['manager_id'].strip()
-            manager_pw = form.cleaned_data['manager_pw']
-            print(f'manager_id:{manager_id}, password: {manager_pw}')
-            try:
-                manager = Staff_data.objects.get(staff_account=manager_id)
-                if check_password(manager_pw, manager.staff_password):
-                    # 这里没有使用 Django 内置的用户系统，手动登录
-                    request.session['manager_id'] = manager_id
-                    message = '成功登入了'
-                    return redirect('/searchMovie/')
-                else:
-                    message = '登入失敗'
-            except Staff_data.DoesNotExist:
-                message = '沒有此帳號'
-        else:
-            print(form.errors)
-            # message = '表單內容有誤'
-            message = '表單內容有誤: {}'.format(form.errors)
-        return render(request, 'manager_login.html', {'form': form, 'message': message})
-    else:
-        message = '錯誤的請求方法'
-    return render(request, 'manager_login.html', locals())
-#-------------------------------------------------------------------------------------------------------------
-#員工忘記密碼
-#-------------------------------------------------------------------------------------------------------------
-def forgetManager(request):
-    if request.method == 'POST':
-        form = ManagerForgetForm(request.POST)
-        if form.is_valid():
-            manager_id = form.cleaned_data['manager_id'].strip()
-            manager_pw = form.cleaned_data['manager_pw']
-            manager_cpw = form.cleaned_data['manager_cpw']
-            if manager_pw == manager_cpw:
-                try:
-                    manager = Staff_data.objects.get(staff_account=manager_id)
-                    manager.staff_password = make_password(manager_pw)
-                    manager.save()
-                    message = "成功更改密碼 請重新登入"
-                    #return redirect('/loginMember/')
-                except Staff_data.DoesNotExist:
-                    message = "此帳號不存在"
-            else:
-                message = "新密碼與確認新密碼不一致"
-        else:
-            message = "表單內容有誤"
-        return render(request, 'manager_forget.html', {'form': form, 'message': message})
-    else:
-        form = ManagerForgetForm()
-    return render(request, 'manager_forget.html', locals())
-
-
-# 登出
-from django.contrib.auth import logout
-def logout_view(request):
-    logout(request)
-    return redirect('/loginMember/')
