@@ -284,6 +284,103 @@ def forgetMember(request):
     else:
         form = MemberForgetForm()
     return render(request, 'user_forget.html', {'form': form})
+from .forms import ManagerRegisterForm, ManagerLoginForm, ManagerForgetForm
+#-------------------------------------------------------------------------------------------------------------
+#員工註冊
+#-------------------------------------------------------------------------------------------------------------
+def registerManager(request):
+    CHOICES = (
+        ('it', 'IT部門'),
+        ('hr', '人事部門')
+    )    
+    message =""
+    if request.method == 'POST':
+        register_form = ManagerRegisterForm(request.POST)
+        if register_form.is_valid():
+            manager_id = register_form.cleaned_data['manager_id'].strip()
+            manager_name = register_form.cleaned_data['manager_name']
+            manager_department = register_form.cleaned_data['manager_department']
+            manager_pw = register_form.cleaned_data['manager_pw']
+            manager_pwc = register_form.cleaned_data['manager_pwc']
+            
+            if manager_pw == manager_pwc:
+                if not Staff_data.objects.filter(staff_no=manager_id).exists():
+                    pw = make_password(manager_pw)
+                    manager = Staff_data.create_manager_data(manager_id, pw, manager_department, manager_name)
+                    manager.save()
+                    message = "註冊成功! 請點選「會員中心」進行登入"
+                else:
+                    message = "帳號已經存在"
+            else:
+                message = "密碼不一致"
+        else:
+            message = "請檢查輸入的欄位內容"
+    else:
+        register_form = ManagerRegisterForm()
+    return render(request, 'manager_register.html', {'form': register_form, 'message': message, 'CHOICES':CHOICES})
+#-------------------------------------------------------------------------------------------------------------
+#員工登入
+#-------------------------------------------------------------------------------------------------------------
+from django.contrib import messages
+
+def loginManager(request):
+    if request.method == 'GET':
+        form = ManagerLoginForm()
+        return render(request, 'manager_login.html', {'form': form})
+         
+    elif request.method == 'POST':
+        form = ManagerLoginForm(request.POST)
+        if form.is_valid():
+            manager_id = form.cleaned_data['manager_id'].strip()
+            manager_pw = form.cleaned_data['manager_pw']
+            print(f'manager_id:{manager_id}, password: {manager_pw}')
+            try:
+                manager = Staff_data.objects.get(staff_account=manager_id)
+                if check_password(manager_pw, manager.staff_password):
+                    # 这里没有使用 Django 内置的用户系统，手动登录
+                    request.session['manager_id'] = manager_id
+                    message = '成功登入了'
+                    return redirect('/searchMovie/')
+                else:
+                    message = '登入失敗'
+            except Staff_data.DoesNotExist:
+                message = '沒有此帳號'
+        else:
+            print(form.errors)
+            # message = '表單內容有誤'
+            message = '表單內容有誤: {}'.format(form.errors)
+        return render(request, 'manager_login.html', {'form': form, 'message': message})
+    else:
+        message = '錯誤的請求方法'
+    return render(request, 'manager_login.html', locals())
+#-------------------------------------------------------------------------------------------------------------
+#員工忘記密碼
+#-------------------------------------------------------------------------------------------------------------
+def forgetManager(request):
+    if request.method == 'POST':
+        form = ManagerForgetForm(request.POST)
+        if form.is_valid():
+            manager_id = form.cleaned_data['manager_id'].strip()
+            manager_pw = form.cleaned_data['manager_pw']
+            manager_cpw = form.cleaned_data['manager_cpw']
+            if manager_pw == manager_cpw:
+                try:
+                    manager = Staff_data.objects.get(staff_account=manager_id)
+                    manager.staff_password = make_password(manager_pw)
+                    manager.save()
+                    message = "成功更改密碼 請重新登入"
+                    #return redirect('/loginMember/')
+                except Staff_data.DoesNotExist:
+                    message = "此帳號不存在"
+            else:
+                message = "新密碼與確認新密碼不一致"
+        else:
+            message = "表單內容有誤"
+        return render(request, 'manager_forget.html', {'form': form, 'message': message})
+    else:
+        form = ManagerForgetForm()
+    return render(request, 'manager_forget.html', locals())
+
 
 # 登出
 from django.contrib.auth import logout

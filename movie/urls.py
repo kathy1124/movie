@@ -45,20 +45,20 @@ urlpatterns = [
     # 會員資料
     path('searchMember/',mv.searchMember, name='searchMember'),
     path('searchMemberDetails/',mv.searchMemberDetails, name='searchMemberDetails'),
-    
-    #登入註冊忘記密碼
-    path('registerMember/',mv.registerMember, name='registerMember'),
-    path('loginMember/',mv.loginMember, name='loginMember'),
-    path('forgetMember/',mv.forgetMember, name='forgetMember'),
 
-
-
+    #員工登入註冊忘記密碼
+    path('registerManager/', mv.registerManager, name='registerManager'),
+    path('loginManager/', mv.loginManager, name='loginManager'),
+    path('forgetManager/', mv.forgetManager, name='forgetManager'),
     #-----------------------------------------------------------
     # User
     # 電影資訊
 	# path('movieInformation/',mv.movieInformation, name='movieInformation'),
 
-    
+    #登入註冊忘記密碼
+    path('registerMember/',mv.registerMember, name='registerMember'),
+    path('loginMember/',mv.loginMember, name='loginMember'),
+    path('forgetMember/',mv.forgetMember, name='forgetMember'),
 
     # 快速購票
     # path('orderTicket/',mv.orderTicket, name='orderTicket'),

@@ -32,9 +32,27 @@ class MemberLoginForm(forms.Form):
     member_id = forms.CharField(label='您的帳號', max_length=50)
     member_pw = forms.CharField(label='輸入密碼', widget=forms.PasswordInput)
 
-
 class MemberForgetForm(forms.Form):
     member_id = forms.CharField(label='您的帳號', max_length=50)
     member_pw = forms.CharField(label='新密碼', widget=forms.PasswordInput)
     member_cpw = forms.CharField(label='確認新密碼', widget=forms.PasswordInput)
 
+class ManagerRegisterForm(forms.Form):
+    CHOICES = (
+        ('it', 'IT部門'),
+        ('hr', '人事部門')
+    )
+    manager_id = forms.CharField(label='您的帳號', max_length=50)
+    manager_name = forms.CharField(label='您的姓名', max_length=25)
+    manager_department = forms.CharField(label='您的帳號', max_length=50)
+    manager_pw = forms.CharField(label='輸入密碼', widget=forms.PasswordInput)
+    manager_pwc = forms.CharField(label='輸入確認密碼', widget=forms.PasswordInput)
+
+class ManagerLoginForm(forms.Form):
+    manager_id = forms.CharField(label='您的帳號', max_length=50)
+    manager_pw = forms.CharField(label='輸入密碼', widget=forms.PasswordInput)
+
+class ManagerForgetForm(forms.Form):
+    manager_id = forms.CharField(label='您的帳號', max_length=50)
+    manager_pw = forms.CharField(label='新密碼', widget=forms.PasswordInput)
+    manager_cpw = forms.CharField(label='確認新密碼', widget=forms.PasswordInput)

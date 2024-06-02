@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %} 忘記密碼 {% endblock title %} 
+{% block headmessage %} 
+<a style='font-family:微軟正黑體; font-size: 19pt'> 忘記密碼 </a>
+{% endblock %}
+{% block content %}
+{% if message %}
+<div class="alert alert-warning">
+  {{ message }}
+</div>
+{% endif %}
+<form action="" method="POST">
+  {% csrf_token %}
+  <div id="login-form" class="form-inline">
+    <label for='manager_id'>員工帳號</label>
+    <input id='manager_id' type='text' style = "background-color:#EFE9E9" name='manager_id'>
+    <br/>
+    <label for='manager_pw'>新密碼</label>
+    <input id='manager_pw' type='password' style = "background-color:#EFE9E9" name='manager_pw'>
+    <br/>
+    <a style='font-size:12px'>6-20位英數混合，英文區分大小寫</a>
+    <br/>
+    <label for='manager_cpw'>密碼確認</label>
+    <input id='manager_cpw' type='password' style = "background-color:#EFE9E9" name='manager_cpw'>    <br/>
+    <input type="submit" color="E1E8FB" style = "background-color:#E1E8FB" value="更改">
+  </div>
+</form>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %} 員工註冊 {% endblock title %}
+{% block headmessage %} 
+<a style='font-family:微軟正黑體; font-size: 19pt'> 員工註冊 </a>
+{% endblock %}
+{% block content %}
+{% if message %}
+    <div class='alert alert-warning'>{{ message }}</div>
+{% endif %}
+<form action="" method="post">
+    {% csrf_token %}
+    <label for='manager_id'>員工編號：</label>
+    <input id='manager_id' type='text' name='manager_id' required>
+    <br/>
+    <label for='manager_name'>員工姓名：</label>
+    <input id='manager_name' type='text' name='manager_name' required>
+    <br/>
+    <label for='manager_department'>部門：</label>
+    <select name='manager_department'>
+        {% for key, value in CHOICES %}
+        <option value="{{ key }}">{{ value }}</option>
+        {% endfor %}
+    </select>
+    <br/>
+    <label for='manager_pw'>密碼：</label>
+    <input id='manager_pw' type='password' name='manager_pw'>
+    <br/>
+    <a style='font-size:12px'>6-20位英數混合，英文區分大小寫</a>
+    <br/>
+    <label for='manager_pwc'>確認密碼：</label>
+    <input id='manager_pwc' type='password' name='manager_pwc'>
+    <br/>
+    <br/>
+    <input type='submit' name='submit' value='註冊'>
+</form>
+</body>
+</html> 
+<script>
+    function go_delete(id){
+        //var user_pass = document.getElementById('user_pass').value;
+        //if (user_pass != "") {
+        var usr = 'delpost/' + id;
+        window.location = usr;
+        //}
+    }
+</script>
+{% endblock content %}

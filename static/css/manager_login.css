@@ -1,0 +1,148 @@
+body { /*整個頁面的字體、邊距和背景顏色。。*/
+    font-family: Arial, sans-serif; /* 整個頁面的字體 */
+    margin: 0; /*元素之間不會有默認的間距。*/
+    padding: 0; /*確保元素的內容與邊框之間沒有任何內部空間。*/
+    background-color: #fbf8fb; /*頁面的背景顏色 */
+}
+
+header { /*導航欄的背景顏色和內邊距，使其在頁面頂部顯示。*/
+    background-color: #d6dce3; /* 導航欄的背景顏色 */
+    padding: 20px ; /*導航欄的內邊距 */
+    text-align: center; /* 將文本置於導航欄中央 */
+    justify-content: center; /* 將導航項目水平居中 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 添加陰影效果 */
+    border-bottom: 1px solid #141414 /* 添加底部邊框 */
+}
+
+nav ul {/*將導航欄的無序列表設置為水平排列，並使其居中。*/
+    list-style: none; /* 移除列表的默認樣式 */
+    padding: 0;
+    margin: 0;
+    display: flex; /*將元素設置為彈性容器*/
+    justify-content: space-between; /* 將導航項目均勻分配位置 */
+    align-items: center; /* 將導航項目垂直居中 */
+    width: 100%; /* 確保 ul 占據整個可用空間 */
+}
+
+nav ul li {/*設置每個導航項目的左右間距，並使用Flexbox進行垂直居中對齊。*/
+    display: flex; 
+    align-items: center;  /* 將項目內容垂直居中 */
+    justify-content: center; /* 將導航項目水平居中 */
+    position: relative;
+    flex: 1; /* 確保每個 li 元素占相同的寬度*/
+}
+
+nav ul li a {/*設置導航鏈接的文本樣式，包括字體顏色和大小。*/
+    text-decoration: none; /* 移除默認的下劃線 */
+    color: #333;  /* 設置文本顏色 */
+    font-size: 20px; /* 設置文本大小 */
+    font-weight: bold; /* 設置字體加粗 */
+    padding: 0 35px; /* 設置內邊距 */
+    display: block; /* 設置為塊級元素 */
+}
+nav ul li::after {/*添加垂直分隔線，並使其與文本垂直居中對齊。*/
+    content: "";
+    position: absolute;  /* 使用絕對定位 */
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%); /* 垂直居中 */
+    height: 65px; /* 設置分隔線高度 */
+    border-right: 1px solid #0c0c0c; /* 添加右邊框作為分隔線 */
+}
+
+nav ul li:last-child::after {/*移除最後一個導航項目的分隔線。*/
+    border: none;
+}
+
+main {/*設置主要內容區為垂直和水平居中，並使其高度為視口高度減去導航欄的高度。*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 60px); /* 設置主區域高度，減去導航欄的高度 */
+}
+
+.login {/*設置登錄表單的背景顏色、內邊距、陰影效果和寬度。*/
+    background-color: #fff; /* 設置表單背景顏色 */
+    padding: 20px 25px;  /* 設置內邊距 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px; /* 設置表單寬度 */
+    box-sizing: border-box;
+}
+
+.login h2 {/*設置表單標題的字體大小、顏色、背景顏色和內邊距。*/
+    /*margin: 0;*/
+    margin: -20px -25px 20px -25px;
+    margin-bottom: 20px; /* 設置底部邊距 */
+    font-size: 20px; 
+    font-weight: bold; 
+    color: #555;
+    text-align: left; /* 左對齊 */
+    padding: 10px; /* 設置內邊距 */
+    background-color: #f5f0ef;
+    box-sizing: border-box; /* 包含內邊距和邊框 */
+}
+
+.form-group {/*設置表單組的底部邊距。*/
+    margin-bottom: 15px;
+        display: flex;
+        align-items: column;
+}
+
+.form-group label {/*設置表單標籤的字體大小、顏色和底部邊距。*/
+    /*display: block; /* 設置為塊級元素 */
+    width: 80px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    /*margin-bottom: 5px; /* 設置底部邊距 */
+}
+
+.form-group input {/*設置表單輸入框的寬度、內邊距、字體大小、邊框和背景顏色。*/
+    /*width: calc(100% - 80px);*/
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #f5f0ef;  /* 設置邊框 */
+    background-color: #f8f3f2;
+    box-sizing: border-box;
+}
+
+.password-note {/*設置密碼提示文本的字體大小、顏色、對齊方式和邊距。*/
+    font-size: 12px;
+    color: #999;
+    margin-top: 5px;
+    margin-left: 65px;
+}
+
+button {/*設置提交按鈕的寬度、內邊距、字體大小、顏色、背景顏色、圓角和鼠標樣式。
+    */
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    color: #110c0c;
+    background-color: #e9eefb;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer; /* 設置鼠標樣式 */
+}
+
+button:hover {/*設置提交按鈕在懸停時的背景顏色變化。*/
+    background-color: #71a5e0;
+}
+
+.links {/*設置表單底部鏈接的字體大小和顯示方式，使其在兩側顯示。*/
+    margin-top: 15px;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between; /* 在兩側顯示鏈接 */
+}
+
+.links a {/*設置鏈接文本的顏色和無下劃線樣式。*/
+    color: #5a88ca; /* 設置鏈接顏色 */
+    text-decoration: none;
+}
+
+.links a:hover {/*設置鏈接在懸停時顯示下劃線。*/
+    text-decoration: underline;
+}
