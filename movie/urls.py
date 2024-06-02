@@ -53,7 +53,7 @@ urlpatterns = [
     #-----------------------------------------------------------
     # User
     # 電影資訊
-	# path('movieInformation/',mv.movieInformation, name='movieInformation'),
+	path('movieInformation/',mv.movieInformation, name='movieInformation'),
 
     #登入註冊忘記密碼
     path('registerMember/',mv.registerMember, name='registerMember'),
@@ -61,7 +61,7 @@ urlpatterns = [
     path('forgetMember/',mv.forgetMember, name='forgetMember'),
 
     # 快速購票
-    # path('orderTicket/',mv.orderTicket, name='orderTicket'),
+    path('orderTicket/',mv.orderTicket, name='orderTicket'),
     # path('orderTicketConfirm/',mv.orderTicketConfirm, name='orderTicketConfirm'),
     # path('orderTicketRecord/',mv.orderTicketRecord, name='orderTicketRecord'),
 

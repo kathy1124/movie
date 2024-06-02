@@ -6,13 +6,13 @@
     <title>電影售票系統</title>
     <link rel="stylesheet" href="/static/css/reset.css">
     <link rel="stylesheet" href="/static/css/header.css">
-    
+
 </head>
 <body>
     <nav class="head">
         <img src="/static/image/camera.png" alt="error">
-        <a href="{% url 'searchMovie'%}"style="text-decoration:none;">電影資訊</a>
-        <a>快速購票</a>
+        <a href="{% url 'movieInformation'%}"style="text-decoration:none;">電影資訊</a>
+        <a href="{% url 'orderTicket'%}"style="text-decoration:none;">快速購票</a>
         <a href="{% url 'lookMember'%}"style="text-decoration:none;">會員中心</a>
         <a>聯絡我們</a>
     </nav>
