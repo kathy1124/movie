@@ -4,13 +4,13 @@ body, html {
 }
 
 .head {
-    
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #D5DDE2;
-    padding: 10px 20px;
-    border-bottom: 1px solid black;
+    padding: 0px;
+    border-bottom: 1px solid black; /* 添加底部邊框 */
+
 
 }
 
@@ -18,14 +18,11 @@ body, html {
 nav.head a[href="{% url 'searchMovie' %}"] {
     color: black;
 }
-nav.head a[href="{% url 'lookMember' %}"] {
-    color: black;
-}
 
 
 .head img {
     height: 40px;
-    flex: 0;
+    flex: 0; /* 使圖片占一等分 */
 }
 
 .head a {
@@ -35,12 +32,15 @@ nav.head a[href="{% url 'lookMember' %}"] {
     margin: 0;
     padding: 10px;
     font-size: 24px;
-    border-left: 1px solid black;
-    
+    border-left: 1px solid black; /* 添加左邊黑線 */
+    height: calc(100% - 20px); /* Adjust to match padding */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .head a:first-child {
-    border-left: none;
+    border-left: none; /* 移除第一個元素的左邊黑線 */
 }
 
 .head a:hover {
@@ -51,9 +51,9 @@ nav.head a[href="{% url 'lookMember' %}"] {
 .main-content {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items:center;
     text-align: center;
-    height: calc(100% - 60px); /* 减去导航栏的高度 */
+    height: calc(100% - 60px); /* 減去導航欄的高度 */
     background-color: #E7E7E7;
 }
 
@@ -61,7 +61,8 @@ nav.head a[href="{% url 'lookMember' %}"] {
     font-size: 30px;
     margin: 0;
     height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    /* margin-top: 10; */
+    text-align: center;
+    display: flex; /* ★ */
+    align-items: center; 
 }

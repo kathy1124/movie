@@ -3,7 +3,7 @@ from .models import Member_data, Ticket, Movie, Staff_data, Session
 from .forms import MovieForm, MemberEditForm, MemberRegisterForm, MemberLoginForm, MemberForgetForm, ManagerRegisterForm, ManagerLoginForm, ManagerForgetForm
 # 首頁
 def home(request):
-    return redirect ('/loginMember/')
+    return redirect ('/movieInformation/')
 
 #-------------------------------------------------------------------------------------------------------------
 # Manager
@@ -12,7 +12,7 @@ def registerManager(request):
     CHOICES = (
         ('it', 'IT部門'),
         ('hr', '人事部門')
-    )
+    )    
     message =""
     if request.method == 'POST':
         register_form = ManagerRegisterForm(request.POST)
@@ -22,7 +22,7 @@ def registerManager(request):
             manager_department = register_form.cleaned_data['manager_department']
             manager_pw = register_form.cleaned_data['manager_pw']
             manager_pwc = register_form.cleaned_data['manager_pwc']
-
+            
             if manager_pw == manager_pwc:
                 if not Staff_data.objects.filter(staff_no=manager_id).exists():
                     pw = make_password(manager_pw)
@@ -44,7 +44,7 @@ def loginManager(request):
     if request.method == 'GET':
         form = ManagerLoginForm()
         return render(request, 'manager_login.html', {'form': form})
-
+    
     elif request.method == 'POST':
         form = ManagerLoginForm(request.POST)
         if form.is_valid():
@@ -131,7 +131,7 @@ def addMovie(request):
         return redirect('addSession')
     else:
         return render(request, 'manager_addMovie.html',locals())
-
+    
 # 新增場次
 def addSession(request):
     if request.method == 'POST':
@@ -157,7 +157,7 @@ def deleteMovie(request, movie_no):
 
 # 編輯電影
 def editMovie(request, movie_no):
-    movie_instance = get_object_or_404(Movie, movie_no=movie_no)
+    movie_instance = get_object_or_404(Movie, movie_no=movie_no)    
     if request.method == 'POST':
         form = MovieForm(request.POST, instance=movie_instance)
         if form.is_valid():
@@ -169,7 +169,7 @@ def editMovie(request, movie_no):
         'form': form,
         'movie_instance': movie_instance,
     }
-    return render(request, 'manager_editMovie.html', context)
+    return render(request, 'manager_editMovie.html', context) 
 
 # 搜尋電影
 from .filters import MovieFilter,MemberFilter
@@ -242,7 +242,7 @@ def searchMemberDetails(request):
     context = {
         'memberFilter': memberFilter
     }
-    return render(request, 'manager_searchMemberDetails.html', locals())
+    return render(request, 'manager_searchMemberDetails.html', locals())   
 
 #---------------------------------------------------------------------------------------------------------------
 # User
@@ -257,7 +257,7 @@ def registerMember(request):
             member_pwc = register_form.cleaned_data['member_pwc']
             member_mail = register_form.cleaned_data['member_mail']
             member_phone = register_form.cleaned_data['member_phone']
-
+            
             if member_pw == member_pwc:
                 if not Member_data.objects.filter(member_account=member_id).exists():
                     pw = make_password(member_pw)
@@ -279,7 +279,7 @@ def loginMember(request):
     if request.method == 'GET':
         form = MemberLoginForm()
         return render(request, 'user_login.html', {'form': form})
-
+        
     elif request.method == 'POST':
         form = MemberLoginForm(request.POST)
         if form.is_valid():
@@ -328,35 +328,27 @@ def forgetMember(request):
     return render(request, 'user_forget.html', {'form': form})
 
 # 電影資訊
-def movieInformation(request):
-    movies = Movie.objects.all()
-    movieFilter = MovieFilter(request.GET, queryset=movies)
-    context = {
-        'movieFilter': movieFilter
-    }
-    return render(request, 'user_movieInformation.html', context)
+def movieInformation(request,movie_id):
+    return render(request, 'user_movieInformation.html', locals())
+  
 
 
 # 快速購票
-def oderTicket(request):
-    movies = Movie.objects.all()
-    movieFilter = MovieFilter(request.GET, queryset=movies)
-    context = {
-        'movieFilter': movieFilter
+def orderTicket(request):
+    return render(request, 'user_orderTicket.html', locals())
 
-    }
-    return render(request, 'user_orderTicket.html', context)
+def orderTicketConfirm(request):
+    return render(request, 'user_orderTicketConfirm.html', locals())
 
-
-
-
+def orderTicketRecord(request):
+    return render(request, 'user_orderTicketRecord.html', locals())
 # 查看會員資訊
 def lookMember(request):
     try:
         member_id = request.session.get('member_id')
         if not member_id:
             return redirect('/loginMember/')
-
+        
         member = Member_data.objects.get(member_account=member_id)
         return render(request, 'user_lookMember.html', {'member': member})
     except Member_data.DoesNotExist:
@@ -367,12 +359,12 @@ def editMember(request):
     member_id = request.session.get('member_id')
     if not member_id:
         return redirect('/loginMember/')
-
+    
     try:
         member = Member_data.objects.get(member_account=member_id)
     except Member_data.DoesNotExist:
         return redirect('/loginMember/')
-
+    
     if request.method == 'POST':
         form = MemberEditForm(request.POST, instance=member)
         if form.is_valid():
@@ -381,3 +373,5 @@ def editMember(request):
     else:
         form = MemberEditForm(instance=member)
     return render(request, 'user_editMember.html', {'form': form})
+
+

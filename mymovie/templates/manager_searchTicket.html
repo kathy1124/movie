@@ -5,14 +5,15 @@
 </div>
 {% endblock %}
 {% block content %}
-
+<div style="text-align:center; align-items:center; justify-content: center; display: flex;">
     <form method="POST" action="{% url 'searchTicket' %}">
         {% csrf_token %}
-        <strong for="member_no">會員編號:</strong>
+        <strong for="member_no">會員編號</strong>
         <input type="text" id="member_no" name="member_no" required>
-        <button type="submit">搜尋</button>
+        <input type="submit" class="btn btn-outline-success" value="查詢" />
     </form>
-    
+</div>
+<div style="text-align:center; align-items:center; justify-content: center; display: flex;">
     {% if member_info %}
         <p>會員帳號: {{ member_info.member_account }}</p>
         {% for ticket in member_info.tickets %}
@@ -21,6 +22,7 @@
             <p>票卷張數: {{ticket.ticket_amount}}</p>
             <p>付款方式: {{ ticket.payment_method }}</p>
         {% endfor %}
+        </div>
         
 
         
@@ -29,3 +31,5 @@
         <p>No member found with the provided member number.</p>
     {% endif %}
     {% endblock %}
+
+    

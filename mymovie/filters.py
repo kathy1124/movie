@@ -55,7 +55,7 @@ class MemberFilter(django_filters.FilterSet):
 #         model = Member_data
 #         fields = '__all__'
 
-class MovieTypeFilter(django_filters.FilterSet):
+# class MovieTypeFilter(django_filters.FilterSet):
     # search_type = django_filters.ChoiceFilter(
     #     choices=[
     #         ('science_fiction', '科幻'),

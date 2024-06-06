@@ -1,19 +1,23 @@
 {% extends 'base2.html' %}
+{%load static %}
+<link rel="stylesheet" href="{% static 'css/searchMember.css'%}"/>
 {% block headmessage %}
-<link rel="stylesheet" href="/static/css/searchMember.css">
-<div class="main-content" style="text-align:center; align-items:center; justify-content: center; display: flex;">
+  <div class="main-content" style="text-align:center; align-items:center; justify-content: center; display: flex;">
    <p style="font-size: 30px;margin: 0; height: 70px;text-align: center; display: flex;align-items: center; ">會員資料</p>
 </div>
 
-{% endblock %}
+{% endblock %}  
 {% block content %}
+<div style="text-align:center; align-items:center; justify-content: center; display: flex;">
 <form method="post">
   <div class="searchMember">
   {% csrf_token %}
-  會員編號：<input {{ memberFilter.form.member }}> 
-  <input type="submit" class="btn btn-outline-success" value="查詢" />
+  <a style="color:rgb(108, 71, 255);font-size: 20px;">會員編號
+  </a><input {{ memberFilter.form.member }}> 
+  <input type="submit" class="btn btn-outline-success " value="查詢" />
 </div>
 </form>
+</div>
 <br />
-
 {% endblock %} 
+
