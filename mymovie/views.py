@@ -1,6 +1,8 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from .models import Member_data, Ticket, Movie, Staff_data, Session
 from .forms import MovieForm, MemberEditForm, MemberRegisterForm, MemberLoginForm, MemberForgetForm, ManagerRegisterForm, ManagerLoginForm, ManagerForgetForm
+from django.contrib.auth import logout
+
 # 首頁
 def home(request):
     return redirect ('/movieInformation/')
@@ -28,7 +30,7 @@ def registerManager(request):
                     pw = make_password(manager_pw)
                     manager = Staff_data.create_manager_data(manager_id, pw, manager_department, manager_name)
                     manager.save()
-                    message = "註冊成功! 請點選「會員中心」進行登入"
+                    message = "註冊成功! 請點選「帳號中心」進行登入"
                 else:
                     message = "帳號已經存在"
             else:
@@ -56,7 +58,7 @@ def loginManager(request):
                 if check_password(manager_pw, manager.staff_password):
                     request.session['manager_id'] = manager_id
                     message = '成功登入了'
-                    return redirect('/searchMovie/')
+                    return redirect('/accountCenter/')
                 else:
                     message = '登入失敗'
             except Staff_data.DoesNotExist:
@@ -97,10 +99,22 @@ def forgetManager(request):
     return render(request, 'manager_forget.html', locals())
 
 # 登出
-from django.contrib.auth import logout
-def logout_view(request):
+def logout_view2(request):
     logout(request)
-    return redirect('/loginMember/')
+    return redirect('/loginManager/')
+
+# 帳號中心
+def accountCenter(request):
+    try:
+        manager_id = request.session.get('manager_id')
+        if not manager_id:
+            return redirect('/loginManager/')
+        
+        staff = Staff_data.objects.get(staff_account=manager_id)
+        return render(request, 'manager_accountCenter.html', locals())
+    except Staff_data.DoesNotExist:
+        return redirect('/loginManager/')
+
 
 # 新增電影
 def addMovie(request):
@@ -327,6 +341,11 @@ def forgetMember(request):
         form = MemberForgetForm()
     return render(request, 'user_forget.html', {'form': form})
 
+# 登出
+def logout_view(request):
+    logout(request)
+    return redirect('/loginMember/')
+
 # 電影資訊
 def movieInformation(request,movie_id):
     return render(request, 'user_movieInformation.html', locals())
@@ -342,6 +361,7 @@ def orderTicketConfirm(request):
 
 def orderTicketRecord(request):
     return render(request, 'user_orderTicketRecord.html', locals())
+
 # 查看會員資訊
 def lookMember(request):
     try:

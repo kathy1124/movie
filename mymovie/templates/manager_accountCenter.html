@@ -1,0 +1,69 @@
+{% extends 'base2.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>帳號中心</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
+</head>
+<body>
+    <div class="announcement">
+        公告：(跑馬燈)……
+    </div>
+    
+    <div class="content">
+        <div class="profile">
+            <img src="#" alt="Profile Picture">
+            <div>{{ staff.get_staff_department_display }}<br>{{ staff.staff_name }}</div>
+            <div class="logout-group">
+                <button class="logout"><a href="{% url 'logout2' %}" style="text-decoration:none; color: black;">登出</a></button>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="store-info">
+                <h3>門市基本資訊</h3>
+                <div></div>
+                <div>
+                    <strong>西門店</strong>
+                    地址：台北市萬華區xxxxxxxxxxx<br>
+                    聯絡電話：02-11112222
+                </div>
+                <div>
+                    <strong>京站店</strong>
+                    地址：台北市中正區xxxxxxxxxxx<br>
+                    聯絡電話：02-33334444
+                </div>
+                <div>
+                    <strong>信義店</strong>
+                    地址：台北市信義區xxxxxxxxxxx<br>
+                    聯絡電話：02-55556666
+                </div>
+            </div>
+            <div class="activity-details">
+                <h3>xxxx活動詳情……</h3>
+            </div>
+        </div>
+    </div>
+    <button id="scrollToTop" class="scroll-to-top">↑</button>
+    <script>
+        // 顯示或隱藏按鈕
+        window.onscroll = function() {
+            var scrollToTopButton = document.getElementById("scrollToTop");
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                scrollToTopButton.style.display = "block";
+            } else {
+                scrollToTopButton.style.display = "none";
+            }
+        };
+
+        // 點擊按鈕回到頁面頂部
+        document.getElementById("scrollToTop").onclick = function() {
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+        };
+    </script>
+</body>
+</html>
+{% endblock %}

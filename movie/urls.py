@@ -22,13 +22,9 @@ from mymovie import views as mv
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', mv.home, name='home'),
-    # 註冊、登入、忘記密碼
-    path('registerMember/',mv.registerMember, name='registerMember'),
-    path('loginMember/',mv.loginMember, name='loginMember'),
-    path('forgetMember/',mv.forgetMember, name='forgetMember'),
-    path('logout/',mv.logout_view, name='logout'),
-    path('lookMember/',mv.lookMember, name='lookMember'),
-
+    # 登出
+    
+    
     #-----------------------------------------------------------
     # Manager
     # 電影處理
@@ -42,23 +38,28 @@ urlpatterns = [
     # 會員購票紀錄
     path('searchTicket/',mv.searchTicket , name='searchTicket'),
 
-    # 會員資料
+    # 搜尋會員資料
     path('searchMember/',mv.searchMember, name='searchMember'),
     path('searchMemberDetails/',mv.searchMemberDetails, name='searchMemberDetails'),
 
-    #員工登入註冊忘記密碼
+    # 員工登入註冊忘記密碼登出
     path('registerManager/', mv.registerManager, name='registerManager'),
     path('loginManager/', mv.loginManager, name='loginManager'),
     path('forgetManager/', mv.forgetManager, name='forgetManager'),
+    path('logout2/',mv.logout_view2, name='logout2'),
+
+    # 員工帳號中心
+    path('accountCenter/',mv.accountCenter , name='accountCenter'),
     #-----------------------------------------------------------
     # User
     # 電影資訊
 	path('movieInformation/',mv.movieInformation, name='movieInformation'),
 
-    #登入註冊忘記密碼
+    # 登入註冊忘記密碼登出
     path('registerMember/',mv.registerMember, name='registerMember'),
     path('loginMember/',mv.loginMember, name='loginMember'),
     path('forgetMember/',mv.forgetMember, name='forgetMember'),
+    path('logout/',mv.logout_view, name='logout'),
 
     # 快速購票
     path('orderTicket/',mv.orderTicket, name='orderTicket'),
@@ -68,5 +69,5 @@ urlpatterns = [
     # 會員中心
     path('lookMember/', mv.lookMember, name='lookMember'),
     path('editMember/', mv.editMember, name='editMember'),
-    # path('/',mv. , name=''),
+    
 ]
