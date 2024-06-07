@@ -1,74 +1,39 @@
-{% extends 'base2.html' %}
-{% block title %} 員工登入 {% endblock title %} 
-{% block headmessage %} 
-<a style='font-family:微軟正黑體; font-size: 19pt'> 員工登入 </a>
-{% endblock %}
-{% block content %}
-{% if message %}
-<div class="alert alert-warning">{{ message }}</div>
-{% endif %}
-<form action="" method="post">
-  {% csrf_token %} 
-  <label for='manager_id'>帳號：</label>
-  <input id='manager_id' type='text' style = "background-color:#EFE9E9" name='manager_id'>
-  <br/>
-  <label for='manager_pw'>密碼：</label>
-  <input id='manager_pw' type='password' style = "background-color:#EFE9E9" name='manager_pw'>
-  <br/>
-  <input type="submit" color="E1E8FB" style = "background-color:#E1E8FB" value="登入">
-  <br/>
-  <a style="font-size: 12px; color: blue; text-decoration: underline;" type='button' onclick='location.href="/registerManager/"'>還沒註冊嗎~馬上申請</a>
-  <a style="font-size: 8pt; color: blue; " type='button' onclick='location.href="/forgetManager/"'>忘記密碼</a>
-</form>
-<script>
-var inputs = document.querySelectorAll('#login-form input');
-inputs.forEach(function(item) {
-  item.classList.add('form-control');
-});
-</script>
-{% endblock %}
+{% include 'header2.html' %}
 
-{% comment %} <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>員工登入</title>
-    <link rel="stylesheet" href="/s"/>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/relogforget.css' %}"/>
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="#">"  "</a></li>
-                <li><a href="#">電影處理</a></li>
-                <li><a href="#">會員購票紀錄</a></li>
-                <li><a href="#">會員資料</a></li>
-                <li><a href="#">帳號中心</a></li>
-                <li><a href="#">聯絡資訊</a></li>
-            </ul>
-        </nav>
-    </header>
     <main>
         <section class="login">
             <h2>員工登入</h2>
-            <form>
+            {% if message %}
+                <div class='alert alert-warning'>{{ message }}</div>
+            {% endif %}
+            <form action = "" method="post">
+                {% csrf_token %}
                 <div class="form-group">
-                    <label for="employee-id">員工編號</label>
-                    <input type="text" id="employee-id" name="employee-id" required>
+                    <label for="manager_id">員工編號</label>
+                    <input type="text" id="manager_id" name="manager_id" required>
                 </div>
                 <div class="form-group">
-                    <label for="password">密碼</label>
-                    <input type="password" id="password" name="password" required>
+                    <label for="manager_pw">密碼</label>
+                    <input type="password" id="manager_pw" name="manager_pw" required>
                 </div>
                 <p class="password-note">6-20位英數混合，英文區分大小寫</p>
                 <button type="submit">登入</button>
                 <p class="links">
-                    <a href="#">還沒註冊嗎? 馬上申請</a>
-                    <a href="#">忘記密碼</a>
+                    <a href="{% url 'registerManager'%}">還沒註冊嗎? 馬上申請</a>
+                    <a href="{% url 'forgetManager'%}">忘記密碼</a>
                 </p>
             </form>
         </section>
     </main>
 </body>
-</html> {% endcomment %}
+</html>

@@ -26,11 +26,12 @@ def registerManager(request):
             manager_pwc = register_form.cleaned_data['manager_pwc']
             
             if manager_pw == manager_pwc:
-                if not Staff_data.objects.filter(staff_no=manager_id).exists():
+                if not Staff_data.objects.filter(staff_account=manager_id).exists():
                     pw = make_password(manager_pw)
                     manager = Staff_data.create_manager_data(manager_id, pw, manager_department, manager_name)
                     manager.save()
                     message = "註冊成功! 請點選「帳號中心」進行登入"
+                    return redirect('/loginManager/')
                 else:
                     message = "帳號已經存在"
             else:
