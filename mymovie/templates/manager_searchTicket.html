@@ -1,7 +1,7 @@
 {% extends 'base2.html' %}
 {% block headmessage %}
 <div class="main-content" style="text-align:center; align-items:center; justify-content: center; display: flex;">
-   <p style="font-size: 30px;margin: 0; height: 70px;text-align: center; display: flex;align-items: center; ">會員購票紀錄</p>
+   <p style="font-size: 30px;margin: 0; height: 70px;text-align: center; display: flex;align-items: center;">會員購票紀錄</p>
 </div>
 {% endblock %}
 {% block content %}
@@ -16,20 +16,41 @@
 <div style="text-align:center; align-items:center; justify-content: center; display: flex;">
     {% if member_info %}
         <p>會員帳號: {{ member_info.member_account }}</p>
-        {% for ticket in member_info.tickets %}
-            <p>電影名稱: {{ ticket.movie_name }}</p>
-            <p>電影場次: {{ ticket.session }}</p>
-            <p>票卷張數: {{ticket.ticket_amount}}</p>
-            <p>付款方式: {{ ticket.payment_method }}</p>
-        {% endfor %}
+        <div class="ticket-info">
+            {% for ticket in member_info.tickets %}
+                <div class="ticket-row">
+                    <div>電影名稱: {{ ticket.movie_name }}</div>
+                    <div>電影場次: {{ ticket.session }}</div>
+                    <div>票卷張數: {{ticket.ticket_amount}}</div>
+                    <div>付款方式: {{ ticket.payment_method }}</div>
+                </div>
+            {% endfor %}
         </div>
-        
-
-        
-
     {% elif member_info is not None %}
         <p>No member found with the provided member number.</p>
     {% endif %}
-    {% endblock %}
-
-    
+</div>
+<!-- Button trigger modal
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Launch demo modal
+  </button> -->
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

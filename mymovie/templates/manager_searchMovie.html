@@ -1,18 +1,24 @@
 {% extends 'base2.html' %}
 {% block content %}
     <form method="get">
-        <div>
+        <div style="text-align:center; align-items:center; justify-content: center; display: flex;">
             {{ movieFilter.form.search_type }}
             {{ movieFilter.form.search_text }}
             <button type="submit">搜尋電影</button>
         </div>
     </form>
 
-    <div>
-        {% for movie in movieFilter.qs %}
-            <li>{{ movie.movie_name }} - {{ movie.date }} - {{ movie.type }} - <a href="{% url 'showMovie' movie.movie_no %}">views</a> - <a href="{% url 'deleteMovie' movie.movie_no%}">delte</a></li>
-        {% empty %}
+    <div style="text-align:center; align-items:center; justify-content: center; display: flex;">
+        {% if movieFilter.qs %}
+            <div class="movie-grid">
+                {% for movie in movieFilter.qs %}
+                    <div class="movie-item">
+                        <li>{{ movie.movie_name }} - {{ movie.date }} - {{ movie.type }} - <a href="{% url 'showMovie' movie.movie_no %}">view</a> - <a href="{% url 'deleteMovie' movie.movie_no %}">delete</a></li>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
             <li>No movies found.</li>
-        {% endfor %}
+        {% endif %}
     </div>
 {% endblock %}

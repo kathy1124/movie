@@ -1,33 +1,13 @@
-.main-content {
-  
-  text-align: center;
-  align-items: center;
-  justify-content: center;
+.member-info {
   display: flex;
-}
-
-form {
-  display: flex;
-  flex-direction: column; /* 使表單內的項目按列排列 */
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 70px); /* 使表單在視窗高度中垂直居中 */
+  width: 100%;
+  margin-top: 20px;
 }
 
-.searchMember {
+.member-info-item {
+  flex: 1;
   text-align: center;
-  display: flex;
-  flex-direction: column; /* 使內部項目按列排列 */
-  align-items: center;
-}
-
-.form-group {
-  margin-bottom: 10px; /* 間隔 */
-  display: flex;
-  flex-direction: row; /* 使標籤和輸入框按行排列 */
-  align-items: center;
-}
-
-.form-group input[type="text"] {
-  margin-left: 10px; /* 在標籤和輸入框之間增加間距 */
+  padding: 10px;
 }

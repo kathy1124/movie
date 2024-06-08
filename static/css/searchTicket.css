@@ -1,0 +1,15 @@
+.ticket-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 10px;
+  width: 80%;
+  margin: 20px auto;
+}
+.ticket-row {
+  display: contents;
+}
+.ticket-row > div {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
