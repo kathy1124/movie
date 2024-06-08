@@ -2,8 +2,9 @@ from .filters import MovieFilter, MemberFilter, MovieTypeFilter
 from django.contrib.auth.hashers import make_password, check_password
 from django.shortcuts import get_object_or_404, redirect, render
 from .models import Member_data, Ticket, Movie, Staff_data, Session
-from .forms import MovieForm, MemberEditForm, MemberRegisterForm, MemberLoginForm, MemberForgetForm, ManagerRegisterForm, ManagerLoginForm, ManagerForgetForm
+from .forms import MovieForm, MemberEditForm, MemberRegisterForm, MemberLoginForm, MemberForgetForm, ManagerRegisterForm, ManagerLoginForm, ManagerForgetForm, OrderForm
 from django.contrib.auth import logout
+from django.http import JsonResponse
 
 # 首頁
 
@@ -415,21 +416,36 @@ def movieInformation(request):
 
 def movieInformationDetails(request, movie_id):
     movies = Movie.objects.get(movie_no=movie_id)
+    sessions = Session.objects.filter(movie=movie_id)
     context = {
         'movies': movies,
+        'sessions': sessions,
     }
     return render(request, 'user_movieInformationDetails.html', context)
 
 
 # 快速購票
 def orderTicket(request):
-    movies = Movie.objects.all()
-    movieFilter = MovieFilter(request.GET, queryset=movies)
-    context = {
-        'movieFilter': movieFilter,
-    }
-    return render(request, 'user_orderTicket.html', context)
+    if request.method == 'POST':
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            # Process the data in form.cleaned_data
+            # (e.g., save booking info to the database)
+            return redirect('orderTicketRecord')  # Redirect after successful booking
+    else:
+        form = OrderForm()
+    return render(request, 'user_orderTicket.html', {'form': form})
 
+def orderTicketRecord(request):
+    return render(request, 'user_orderTicketRecord.html')
+
+def get_sessions(request):
+    movie_id = request.GET.get('movie_id')
+    sessions = Session.objects.filter(movie_id=movie_id).order_by('session')
+    session_options = '<option value="">請選擇電影場次</option>'
+    for session in sessions:
+        session_options += f'<option value="{session.pk}">{session.session}</option>'
+    return JsonResponse(session_options, safe=False)
 
 # def orderTicketConfirm(request):
 #     return render(request, 'user_orderTicketConfirm.html', locals())

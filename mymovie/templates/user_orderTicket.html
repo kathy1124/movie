@@ -7,39 +7,8 @@
 {% endblock %}
 {% block content %}
 <form method="post">
-  <div class="orderTicket">
-    {% csrf_token %}
-    <div class="form-group">
-      電影名稱
-      <select name="movie_name">
-        <option value="">請選擇電影名稱</option>
-        <option value="spiderman">蜘蛛人：穿越新宇宙</option>
-        <option value="dune">沙丘2</option>
-        <option value="something">可憐的東西</option>
-      </select>
-    </div>
-    <div class="orderTicket">
-      {% csrf_token %}
-      <div class="form-group">
-        放映場次
-        <select name="movie_name">
-          <option value="">請選擇放映場次</option>
-          <option value="spiderman">10:00</option>
-          <option value="dune">14:00</option>
-          <option value="something">20:00</option>
-        </select>
-      </div>
-      <div class="orderTicket">
-        {% csrf_token %}
-        <div class="form-group">
-          票券張數
-          <select name="movie_name">
-            <option value="">請選擇票券張數</option>
-            <option value="spiderman">1張</option>
-            <option value="dune">2張</option>
-            <option value="something">3張</option>
-          </select>
-        </div>
-       
-   
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Book</button>
+</form>
 {% endblock %}

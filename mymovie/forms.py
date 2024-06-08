@@ -1,6 +1,6 @@
 
 from django import forms
-from .models import Movie, Member_data
+from .models import Movie, Member_data, Session
 
 
 class MovieForm(forms.ModelForm):
@@ -26,7 +26,7 @@ class MemberRegisterForm(forms.Form):
     member_pw = forms.CharField(label='輸入密碼', widget=forms.PasswordInput)
     member_pwc = forms.CharField(label='輸入確認密碼', widget=forms.PasswordInput)
     member_mail = forms.EmailField(label='電子信箱')
-    member_phone = forms.CharField(label='手機號碼', max_length=15)  
+    member_phone = forms.CharField(label='手機號碼', max_length=15)
 
 class MemberLoginForm(forms.Form):
     member_id = forms.CharField(label='您的帳號', max_length=50)
@@ -56,3 +56,13 @@ class ManagerForgetForm(forms.Form):
     manager_id = forms.CharField(label='您的帳號', max_length=50)
     manager_pw = forms.CharField(label='新密碼', widget=forms.PasswordInput)
     manager_pwc = forms.CharField(label='確認新密碼', widget=forms.PasswordInput)
+
+class OrderForm(forms.Form):
+    movie = forms.ModelChoiceField(queryset=Movie.objects.all(), label="電影名稱")
+    session = forms.ModelChoiceField(queryset=Session.objects.all(), label="電影場次")
+    ticket_quantity = forms.ChoiceField(choices=[(i, str(i)) for i in range(1, 11)], label="票卷張數")
+    PAYMENT_CHOICES = [
+        ('cash', '現金'),
+        ('credit_card', '信用卡')
+    ]
+    payment_method = forms.ChoiceField(choices=PAYMENT_CHOICES, label="付款方式")

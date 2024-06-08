@@ -14,7 +14,13 @@
     <strong>劇情片長</strong>
     {{ movies.length }}<br />
     <strong>放映場次</strong>
-    {{ session.session }}<br />
+    <ul>
+        {% for session in sessions %}
+            <li>{{ session.session }}</li>
+        {% empty %}
+            <li>No sessions available</li>
+        {% endfor %}
+    </ul><br />
     <strong>圖片</strong
     ><img src="{{ movies.picture }}" height="250px" /><br />
   </ul>

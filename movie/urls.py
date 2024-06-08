@@ -66,7 +66,7 @@ urlpatterns = [
     # 快速購票
     path('orderTicket/', mv.orderTicket, name='orderTicket'),
     # path('orderTicketConfirm/', mv.orderTicketConfirm, name='orderTicketConfirm'),
-    # path('orderTicketRecord/', mv.orderTicketRecord, name='orderTicketRecord'),
+    path('orderTicketRecord/', mv.orderTicketRecord, name='orderTicketRecord'),
 
     # 會員中心
     path('lookMember/', mv.lookMember, name='lookMember'),
