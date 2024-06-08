@@ -1,0 +1,22 @@
+{% extends 'base.html' %} {% block content %}
+<div>
+  <h2>{{ movies.movie_name }}詳細資料</h2>
+  <br />
+  <ul>
+    <strong>上映日期</strong>
+    {{ movies.date }}<br />
+    <strong>導演:</strong>
+    {{ movies.director }}<br />
+    <strong>演員</strong>
+    {{ movies.actor }}<br />
+    <strong>類型</strong>
+    {{ movies.type }}<br />
+    <strong>劇情片長</strong>
+    {{ movies.length }}<br />
+    <strong>放映場次</strong>
+    {{ session.session }}<br />
+    <strong>圖片</strong
+    ><img src="{{ movies.picture }}" height="250px" /><br />
+  </ul>
+</div>
+{% endblock %}

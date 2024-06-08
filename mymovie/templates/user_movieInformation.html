@@ -1,13 +1,24 @@
-{% extends 'base.html' %}
-{% block content %}
-    <form method="get">
-        <br>
-        <div id="serchMovie">
-            <label for='movie_id' class="movie">電影名稱：</label>
-            <input type="text" name="movie_id" id="movie_id" placeholder="請輸入關鍵字" class="form-control" />
-            <!-- {{ MovieTypeFilter.form.search_type }}
-            {{ MovieTypeFilter.form.search_text }} -->
-            <button type="submit">搜尋電影</button>
-        </div>
-    </form>
+{% extends 'base.html' %} {% block content %}
+<form method="get">
+  <div>
+    {{ movieTypeFilter.form.search_type }} {{ movieTypeFilter.form.search_text}}
+    <button type="submit">搜尋</button>
+  </div>
+</form>
+<div>
+  {% if movies %}
+  <ul>
+    {% for movie in movies %}
+    <a
+      href="{% url 'movieInformationDetails' movie.movie_no %}?movie_id={{ movie.movie_no }}"
+    >
+      <img src="{{ movie.picture }}" height="250px" /><br />
+      {{ movie.movie_name }}</a
+    >
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p>No movies found.</p>
+  {% endif %}
+</div>
 {% endblock %}

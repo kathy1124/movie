@@ -1,11 +1,8 @@
-{% extends 'base2.html' %}
-{% block headmessage %}
+{% extends 'base2.html' %} {% block headmessage %}
 <h2>會員資料</h2>
-{% endblock headmessage %} 
-{% block content %}
+{% endblock headmessage %} {% block content %}
 <form method="post">
-  {% csrf_token %}
-  會員編號： <input {{ memberFilter.form.member }}>
+  {% csrf_token %} 會員編號： <input {{ memberFilter.form.member }} />
   <input type="submit" class="btn btn-outline-success" value="查詢" />
 </form>
 <br />
@@ -25,4 +22,4 @@
     {% endfor %}
   </tbody>
 </table>
-{% endblock %} 
+{% endblock %}

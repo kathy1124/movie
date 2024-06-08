@@ -1,23 +1,51 @@
-{% extends 'base2.html' %}
-{%load static %}
-<link rel="stylesheet" href="{% static 'css/searchMember.css'%}"/>
+{% extends 'base2.html' %} {%load static %}
+<link rel="stylesheet" href="{% static 'css/searchMember.css'%}" />
 {% block headmessage %}
-  <div class="main-content" style="text-align:center; align-items:center; justify-content: center; display: flex;">
-   <p style="font-size: 30px;margin: 0; height: 70px;text-align: center; display: flex;align-items: center; ">會員資料</p>
+<div
+  class="main-content"
+  style="
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+  "
+>
+  <p
+    style="
+      font-size: 30px;
+      margin: 0;
+      height: 70px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+    "
+  >
+    會員資料
+  </p>
 </div>
 
-{% endblock %}  
-{% block content %}
-<div style="text-align:center; align-items:center; justify-content: center; display: flex;">
-<form method="post">
-  <div class="searchMember">
-  {% csrf_token %}
-  <a style="color:rgb(108, 71, 255);font-size: 20px;">會員編號
-  </a><input {{ memberFilter.form.member }}> 
-  <input type="submit" class="btn btn-outline-success " value="查詢" />
+{% endblock %} {% block content %}
+<div
+  style="
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+  "
+>
+  <form method="POST" action="{% url 'searchMember' %}">
+    {% csrf_token %}
+    <label for="member_no" style="color: rgb(108, 71, 255); font-size: 20px"
+      >會員編號:</label
+    >
+    <input type="text" id="member_no" name="member_no" required />
+    <button type="submit">搜尋</button>
+  </form>
 </div>
-</form>
-</div>
-<br />
-{% endblock %} 
-
+{% if member_info %}
+<p>會員帳號: {{ member_info.member_account }}</p>
+<p>電子信箱: {{ member_info.gmail }}</p>
+<p>手機號碼: {{ member_info.phone_number }}</p>
+{% elif member_info is not None %}
+<p>No member found with the provided member number.</p>
+{% endif %} {% endblock %}
