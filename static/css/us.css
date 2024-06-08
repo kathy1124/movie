@@ -1,0 +1,156 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #faf8fb;
+    height: 100vh; /* 使 body 佔滿整個視窗高度 */
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background-color: #d6dce3;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid #141414;
+    flex-shrink: 0; /* 固定 header 高度 */
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+nav ul li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    flex: 1;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 0 35px;
+    display: block;
+}
+
+nav ul li::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 65px;
+    border-right: 1px solid #0c0c0c;
+}
+
+nav ul li:last-child::after {
+    border: none;
+}
+
+.back-button {
+    position: absolute;
+    top: 15%; /* 以百分比定位到導航欄下方 */
+    left: 1%;
+    padding: 10px 20px;
+    font-size: 12px;
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1000; /* 保證按鈕在最上層 */
+}
+
+.back-button:hover {
+    background-color: #333;
+}
+
+.content {
+    display: flex;
+    align-items: center; /* 垂直居中 */
+    justify-content: center; /* 將內容置中對齊 */
+    flex-grow: 1; /* 使 content 填充剩餘空間 */
+    margin: 20px; /* 四周留白 */
+}
+
+.main-content {
+    background-color: #faf8fb;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 將內容置中對齊 */
+    width: 100%; /* 讓 main-content 佔滿父元素寬度 */
+}
+
+.store-info, .activity-details {
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    margin-bottom: 20px;
+    width: 30%;
+    height:80%;
+    text-align: left;
+}
+
+.store-info{
+    height: 65%;
+}
+
+.store-info h3, .activity-details h3 {
+    font-size: larger;
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #333;
+    font-weight: bolder;
+}
+
+.store-info div, .activity-details div {
+    margin-bottom: 20px;
+}
+
+.store-info strong {
+    margin-top: 25px;
+    font-weight: bold;
+    display: block;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.store-info p{
+    margin-bottom: 5px;
+}
+
+.scroll-to-top {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 99;
+    border: none;
+    outline: none;
+    background-color: #555;
+    color: white;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.scroll-to-top:hover {
+    background-color: #333;
+}
+
+
+.store{
+    margin-bottom: 0px;
+}

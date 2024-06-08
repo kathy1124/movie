@@ -1,24 +1,77 @@
-{% extends 'base.html' %} {% block content %}
-<form method="get">
-  <div>
-    {{ movieTypeFilter.form.search_type }} {{ movieTypeFilter.form.search_text}}
-    <button type="submit">搜尋</button>
-  </div>
-</form>
-<div>
-  {% if movies %}
-  <ul>
-    {% for movie in movies %}
-    <a
-      href="{% url 'movieInformationDetails' movie.movie_no %}?movie_id={{ movie.movie_no }}"
-    >
-      <img src="{{ movie.picture }}" height="250px" /><br />
-      {{ movie.movie_name }}</a
-    >
-    {% endfor %}
-  </ul>
-  {% else %}
-  <p>No movies found.</p>
-  {% endif %}
-</div>
-{% endblock %}
+{% include 'header.html' %}
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>電影資訊</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/start.css' %}"/>
+</head>
+<body>
+    <main>
+        <form method="get">
+        <div class="search-bar">
+            {{ movieTypeFilter.form.search_type }} {{ movieTypeFilter.form.search_text}} <button type="submit">搜尋</button>
+        </div>
+        <section class="movie-list">
+
+        <div class="showing">
+            <h2>現正熱映</h2>
+            <div class="movies">
+                {% if showing_movies %}
+                    {% for movie in showing_movies %}
+                        <div class="movie">
+                            <a href="{% url 'movieInformationDetails' movie.movie_no %}?movie_id={{ movie.movie_no }}">
+                                <img src="{{ movie.picture }}" height="200px"/> <a>{{ movie.movie_name }}</a>
+                            </a>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No movies found.</p>
+                {% endif %}
+            </div>
+        </div>
+            <div class="coming-soon">
+                <h2>即將上映</h2>
+                <div class="movies">
+                    {% if coming_soon_movies %}
+                        {% for movie in coming_soon_movies %}
+                            <div class="movie">
+                                <a href="{% url 'movieInformationDetails' movie.movie_no %}?movie_id={{ movie.movie_no }}">
+                                    <img src="{{ movie.picture }}" height="200px"/> <a>{{ movie.movie_name }}</a>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>No movies found.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+        </section>
+        <button id="scrollToTop" class="scroll-to-top">↑</button>
+        <script>
+            // 顯示或隱藏按鈕
+            window.onscroll = function() {
+                var scrollToTopButton = document.getElementById("scrollToTop");
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    scrollToTopButton.style.display = "block";
+                } else {
+                    scrollToTopButton.style.display = "none";
+                }
+            };
+
+          // 點擊按鈕回到頁面頂部
+            document.getElementById("scrollToTop").onclick = function() {
+                document.body.scrollTop = 0; // For Safari
+                document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+            };
+        </script>
+    </form>
+</main>
+
+</body>
+</html>
+
+

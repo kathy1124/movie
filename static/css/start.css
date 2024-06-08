@@ -1,0 +1,168 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fbf8fb;
+}
+
+header { /*導航欄的背景顏色和內邊距，使其在頁面頂部顯示。*/
+    background-color: #d6dce3; /* 導航欄的背景顏色 */
+    padding: 20px ; /*導航欄的內邊距 */
+    text-align: center; /* 將文本置於導航欄中央 */
+    justify-content: center; /* 將導航項目水平居中 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 添加陰影效果 */
+    border-bottom: 1px solid #141414 /* 添加底部邊框 */
+}
+
+nav ul {/*將導航欄的無序列表設置為水平排列，並使其居中。*/
+    list-style: none; /* 移除列表的默認樣式 */
+    padding: 0;
+    margin: 0;
+    display: flex; /*將元素設置為彈性容器*/
+    justify-content: space-between; /* 將導航項目均勻分配位置 */
+    align-items: center; /* 將導航項目垂直居中 */
+    width: 100%; /* 確保 ul 占據整個可用空間 */
+}
+
+nav ul li {/*設置每個導航項目的左右間距，並使用Flexbox進行垂直居中對齊。*/
+    display: flex; 
+    align-items: center;  /* 將項目內容垂直居中 */
+    justify-content: center; /* 將導航項目水平居中 */
+    position: relative;
+    flex: 1; /* 確保每個 li 元素占相同的寬度*/
+}
+
+nav ul li a {/*設置導航鏈接的文本樣式，包括字體顏色和大小。*/
+    text-decoration: none; /* 移除默認的下劃線 */
+    color: #333;  /* 設置文本顏色 */
+    font-size: 20px; /* 設置文本大小 */
+    font-weight: bold; /* 設置字體加粗 */
+    padding: 0 35px; /* 設置內邊距 */
+    display: block; /* 設置為塊級元素 */
+}
+nav ul li::after {/*添加垂直分隔線，並使其與文本垂直居中對齊。*/
+    content: "";
+    position: absolute;  /* 使用絕對定位 */
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%); /* 垂直居中 */
+    height: 65px; /* 設置分隔線高度 */
+    border-right: 1px solid #0c0c0c; /* 添加右邊框作為分隔線 */
+}
+
+nav ul li:last-child::after {/*移除最後一個導航項目的分隔線。*/
+    border: none;
+}
+
+.search-bar {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.search-bar input {
+    width: 50%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    background-color: #d6dce3;
+    color: #333;
+    padding: 10px;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #71a5e0;
+}
+
+.movie-list {
+    padding: 20px;
+}
+
+.current-movies, .upcoming-movies {
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 1.5rem;
+    color: #333;
+    border-bottom: 2px solid #d6dce3;
+    padding-bottom: 5px;
+}
+
+.movies {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.movie {
+    width: 23%;
+    margin: 1%;
+    text-align: center;
+}
+
+.movie img {
+    width: 100px;
+    object-fit: cover;
+}
+
+.movie a {
+    text-decoration: none;
+    color: #333;
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+.scroll-to-top {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 99;
+    border: none;
+    outline: none;
+    background-color: #555;
+    color: white;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.scroll-to-top:hover {
+    background-color: #333;
+}
+

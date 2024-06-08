@@ -1,5 +1,5 @@
 {% extends 'base2.html' %}
-{% block content%}
+{% block content %}
 <form action="/addMovie/" method="post">
     {% csrf_token %}
     <div class="movie_name">
@@ -10,9 +10,9 @@
         <label for="date">日期： </label>
         <input type="date" name="date" id="">
     
-        <select name='show'>
-            {% for choices in CHOICES %}
-            <option value="{{choices}}">{{choices}}</option>
+        <select name="show" required>
+            {% for value, display in CHOICES %}
+                <option value="{{ value }}">{{ display }}</option>
             {% endfor %}
         </select>
     </div>

@@ -18,6 +18,7 @@
             {% endif %}
             <form action = "" method="post">
                 {% csrf_token %}
+                <input type="hidden" name="next" value="{{ next }}">
                 <div class="form-group">
                     <label for="manager_id">員工編號</label>
                     <input type="text" id="manager_id" name="manager_id" required>

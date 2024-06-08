@@ -50,15 +50,15 @@ def registerManager(request):
     return render(request, 'manager_register.html', {'form': register_form, 'message': message, 'CHOICES': CHOICES})
 
 # 登入
-
-
 def loginManager(request):
     if request.method == 'GET':
         form = ManagerLoginForm()
-        return render(request, 'manager_login.html', {'form': form})
+        next_url = request.GET.get('next', '/accountCenter/')
+        return render(request, 'manager_login.html', {'form': form, 'next': next_url})
 
     elif request.method == 'POST':
         form = ManagerLoginForm(request.POST)
+        next_url = request.POST.get('next', '/accountCenter/')
         if form.is_valid():
             manager_id = form.cleaned_data['manager_id'].strip()
             manager_pw = form.cleaned_data['manager_pw']
@@ -68,16 +68,15 @@ def loginManager(request):
                 if check_password(manager_pw, manager.staff_password):
                     request.session['manager_id'] = manager_id
                     message = '成功登入了'
-                    return redirect('/accountCenter/')
+                    return redirect(next_url)
                 else:
                     message = '登入失敗'
             except Staff_data.DoesNotExist:
                 message = '沒有此帳號'
         else:
             print(form.errors)
-            # message = '表單內容有誤'
             message = '表單內容有誤: {}'.format(form.errors)
-        return render(request, 'manager_login.html', {'form': form, 'message': message})
+        return render(request, 'manager_login.html', {'form': form, 'message': message, 'next': next_url})
     else:
         message = '錯誤的請求方法'
     return render(request, 'manager_login.html', locals())
@@ -134,7 +133,13 @@ def accountCenter(request):
 
 # 新增電影
 def addMovie(request):
-    CHOICES = ('即將上映', '現正熱映')
+    CHOICES = [
+        ('coming_soon', '即將上映'),
+        ('showing', '現正熱映'),
+    ]
+    if 'manager_id' not in request.session:
+        return redirect(f'/loginManager/?next={request.path}')
+
     if request.method == 'POST':
         movie_no = request.POST.get('movie_no')
         movie_name = request.POST.get('movie_name')
@@ -160,12 +165,16 @@ def addMovie(request):
         )
         return redirect('addSession')
     else:
-        return render(request, 'manager_addMovie.html', locals())
+        return render(request, 'manager_addMovie.html', {'CHOICES': CHOICES})
+
+
 
 # 新增場次
 
 
 def addSession(request):
+    if 'manager_id' not in request.session:
+        return redirect(f'/loginManager/?next={request.path}')
     if request.method == 'POST':
         movie_id = request.POST['movie']
         session_desc = request.POST['session']
@@ -177,10 +186,13 @@ def addSession(request):
         movies = Movie.objects.all()
         return render(request, 'manager_addSession.html', {'movies': movies})
 
+
 # 刪除電影
 
 
 def deleteMovie(request, movie_no):
+    if 'manager_id' not in request.session:
+        return redirect(f'/loginManager/?next={request.path}')
     if movie_no:
         try:
             movie = Movie.objects.get(movie_no=movie_no)
@@ -188,11 +200,12 @@ def deleteMovie(request, movie_no):
         except:
             pass
     return redirect('searchMovie')
-
 # 編輯電影
 
 
 def editMovie(request, movie_no):
+    if 'manager_id' not in request.session:
+        return redirect(f'/loginManager/?next={request.path}')
     movie_instance = get_object_or_404(Movie, movie_no=movie_no)
     if request.method == 'POST':
         form = MovieForm(request.POST, instance=movie_instance)
@@ -212,6 +225,8 @@ def editMovie(request, movie_no):
 
 
 def searchMovie(request):
+    if 'manager_id' not in request.session:
+        return redirect(f'/loginManager/?next={request.path}')
     movies = Movie.objects.all()
     movieFilter = MovieFilter(request.GET, queryset=movies)
     context = {
@@ -223,6 +238,8 @@ def searchMovie(request):
 
 
 def showMovie(request, movie_no):
+    if 'manager_id' not in request.session:
+        return redirect(f'/loginManager/?next={request.path}')
     movie = Movie.objects.get(movie_no=movie_no)
     ses = Session.objects.filter(movie=movie_no)
     return render(request, 'manager_showMovie.html', locals())
@@ -259,6 +276,8 @@ def search_member_info(member_no):
 
 
 def searchTicket(request):
+    if 'manager_id' not in request.session:
+        return redirect(f'/loginManager/?next={request.path}')
     member_info = None
     if request.method == 'POST':
         member_no = request.POST.get('member_no')
@@ -374,8 +393,6 @@ def logout_view(request):
     return redirect('/loginMember/')
 
 # 電影資訊
-
-
 def movieInformation(request):
     movies = Movie.objects.all()
     movieTypeFilter = MovieTypeFilter(request.GET, queryset=movies)
@@ -383,9 +400,15 @@ def movieInformation(request):
     if movieTypeFilter.qs:
         movies = movieTypeFilter.qs
 
+    coming_soon_movies = movies.filter(show='coming_soon')
+    showing_movies = movies.filter(show='showing')
+    removed_movies = movies.filter(show='removed')
+
     context = {
         'movieTypeFilter': movieTypeFilter,
-        'movies': movies,
+        'coming_soon_movies': coming_soon_movies,
+        'showing_movies': showing_movies,
+        'removed_movies': removed_movies,
     }
     return render(request, 'user_movieInformation.html', context)
 
@@ -450,3 +473,7 @@ def editMember(request):
     else:
         form = MemberEditForm(instance=member)
     return render(request, 'user_editMember.html', {'form': form})
+
+# 聯絡我們
+def contact(request):
+    return render(request, "user_contactUs.html", locals())
