@@ -35,7 +35,7 @@ class MemberLoginForm(forms.Form):
 class MemberForgetForm(forms.Form):
     member_id = forms.CharField(label='您的帳號', max_length=50)
     member_pw = forms.CharField(label='新密碼', widget=forms.PasswordInput)
-    member_cpw = forms.CharField(label='確認新密碼', widget=forms.PasswordInput)
+    member_pwc = forms.CharField(label='確認新密碼', widget=forms.PasswordInput)
 
 class ManagerRegisterForm(forms.Form):
     CHOICES = (
@@ -55,4 +55,4 @@ class ManagerLoginForm(forms.Form):
 class ManagerForgetForm(forms.Form):
     manager_id = forms.CharField(label='您的帳號', max_length=50)
     manager_pw = forms.CharField(label='新密碼', widget=forms.PasswordInput)
-    manager_cpw = forms.CharField(label='確認新密碼', widget=forms.PasswordInput)
+    manager_pwc = forms.CharField(label='確認新密碼', widget=forms.PasswordInput)

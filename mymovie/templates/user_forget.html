@@ -1,28 +1,39 @@
-{% extends "user_relogBase.html" %}
-{% block title %} 忘記密碼 {% endblock title %} 
-{% block headmessage %} 
-<a style='font-family:標楷體; font-size: 19pt'> 忘記密碼 </a>
-{% endblock %}
-{% block content %}
-{% if message %}
-<div class="alert alert-danger">
-  {{ message }}
-</div>
-{% endif %}
-<form action="" method="POST">
-  {% csrf_token %}
-  <div id="login-form" class="form-inline">
-    <label for='member_id'>帳號：</label>
-    <input type="text" name="member_id" id="member_id" placeholder="請輸入您的帳號" class="form-control" />
-    <br/>
-    <label for='member_pw'>新密碼：</label>
-    <input type="password" name="member_pw" id="member_pw" placeholder="請輸入您的新密碼" class="form-control" />
-    <br/>
-    <label for='member_cpw'>確認新密碼：</label>
-    <input type="password" name="member_cpw" id="member_cpw" placeholder="請輸入您的新密碼" class="form-control" />
-    <br/>
-    <input type="submit" color="E1E8FB" style = "background-color:#E1E8FB" value="修改密碼">
-  </div>
-</form>
-{% endblock %}
-
+{% include 'header.html' %}
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>員工登入</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/relogforget.css' %}"/>
+</head>
+<body>
+    <main>
+        <section class="login">
+            <h2>忘記密碼</h2>
+            {% if message %}
+            <div class='alert alert-warning'>{{ message }}</div>
+            {% endif %}
+            <form action = "" method="post">
+                {% csrf_token %}
+                <div class="alert alert-warning"></div>
+                <div class="form-group">
+                    <label for="member_id">帳號</label>
+                    <input type="text" id="member_id" name="member_id" required>
+                </div>
+                <div class="form-group">
+                    <label for="member_pw">新密碼</label>
+                    <input type="password" id="member_pw" name="member_pw" required>
+                </div>
+                <p class="password-note">6-20位英數混合，英文區分大小寫</p>
+                <div class="form-group">
+                  <label for="member_pwc">確認新密碼</label>
+                  <input type="password" id="member_pwc" name="member_pwc" required>
+              </div>
+                <button type="submit">更改</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

@@ -1,32 +1,39 @@
-{% extends "base.html" %}
-{% block title %} 登入會員 {% endblock title %} 
-{% block headmessage %} 
-<a style='font-family:標楷體; font-size: 19pt'> 登入會員 </a>
-{% endblock %}
-{% block content %}
-{% if message %}
-<div class="alert alert-danger">
-  {{ message }}
-</div>
-{% endif %}
-<form action="" method="post">
-  {% csrf_token %}
-  <div id="login-form" class="form-inline">
-    <label for='member_id' class="account">帳號：</label>
-    <input type="text" name="member_id" id="member_id" placeholder="請輸入您的帳號" class="form-control" />
-    <br/>
-    <label for='member_pw'>密碼：</label>
-    <input type="password" name="member_pw" id="member_pw" placeholder="請輸入您的密碼" class="form-control" />
-    <br/>
-    <input type="submit" color="E1E8FB" style="background-color:#E1E8FB" value="登入" class="btn btn-primary">
-    <a style="font-size: 8pt; color: blue; text-decoration: underline;" href="/registerMember/">還沒註冊嗎~馬上申請</a>
-    <a style="font-size: 8pt; color: blue;" href="/forgetMember/">忘記密碼</a>
-  </div>
-</form>
-<script>
-var inputs = document.querySelectorAll('#login-form input');
-inputs.forEach(function(item) {
-  item.classList.add('form-control');
-});
-</script>
-{% endblock %}
+{% include 'header.html' %}
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登入會員</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/relogforget.css' %}"/>
+</head>
+<body>
+    <main>
+        <section class="login">
+            <h2>登入會員</h2>
+            {% if message %}
+                <div class='alert alert-warning'>{{ message }}</div>
+            {% endif %}
+            <form action = "" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="member_id">帳號</label>
+                    <input type="text" id="member_id" name="member_id" required>
+                </div>
+                <div class="form-group">
+                    <label for="member_pw">密碼</label>
+                    <input type="password" id="member_pw" name="member_pw" required>
+                </div>
+                <p class="password-note">6-20位英數混合，英文區分大小寫</p>
+                <button type="submit">登入</button>
+                <p class="links">
+                    <a href="{% url 'registerMember'%}">還沒註冊嗎~馬上申請</a>
+                    <a href="{% url 'forgetMember'%}">忘記密碼</a>
+                </p>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

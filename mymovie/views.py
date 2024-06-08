@@ -80,8 +80,8 @@ def forgetManager(request):
         if form.is_valid():
             manager_id = form.cleaned_data['manager_id'].strip()
             manager_pw = form.cleaned_data['manager_pw']
-            manager_cpw = form.cleaned_data['manager_cpw']
-            if manager_pw == manager_cpw:
+            manager_pwc = form.cleaned_data['manager_pwc']
+            if manager_pw == manager_pwc:
                 try:
                     manager = Staff_data.objects.get(staff_account=manager_id)
                     manager.staff_password = make_password(manager_pw)
@@ -278,7 +278,7 @@ def registerMember(request):
                     pw = make_password(member_pw)
                     member = Member_data.create_member_data(member_id, pw, member_mail, member_phone)
                     member.save()
-                    message = "註冊成功! 請點選「返回登入」進行登入"
+                    message = "註冊成功! 請點選「會員中心」進行登入"
                 else:
                     message = "帳號已經存在"
             else:
@@ -324,8 +324,8 @@ def forgetMember(request):
         if form.is_valid():
             member_id = form.cleaned_data['member_id'].strip()
             member_pw = form.cleaned_data['member_pw']
-            member_cpw = form.cleaned_data['member_cpw']
-            if member_pw == member_cpw:
+            member_pwc = form.cleaned_data['member_pwc']
+            if member_pw == member_pwc:
                 try:
                     member = Member_data.objects.get(member_account=member_id)
                     member.member_password = make_password(member_pw)
