@@ -289,6 +289,8 @@ def searchTicket(request):
 
 
 def searchMember(request):
+    if 'manager_id' not in request.session:
+        return redirect(f'/loginManager/?next={request.path}')
     member_info = None
     if request.method == 'POST':
         member_no = request.POST.get('member_no')
