@@ -23,8 +23,9 @@
                     {% for movie in showing_movies %}
                         <div class="movie">
                             <a href="{% url 'movieInformationDetails' movie.movie_no %}?movie_id={{ movie.movie_no }}">
-                                <img src="{{ movie.picture }}" height="200px"/> <a>{{ movie.movie_name }}</a>
+                                <img src="{{ movie.picture }}" height="90%"/> 
                             </a>
+                            <p>{{ movie.movie_name }}</p>
                         </div>
                     {% endfor %}
                 {% else %}
@@ -39,8 +40,9 @@
                         {% for movie in coming_soon_movies %}
                             <div class="movie">
                                 <a href="{% url 'movieInformationDetails' movie.movie_no %}?movie_id={{ movie.movie_no }}">
-                                    <img src="{{ movie.picture }}" height="200px"/> <a>{{ movie.movie_name }}</a>
+                                    <img src="{{ movie.picture }}"  /> 
                                 </a>
+                                <p>{{ movie.movie_name }}</p>
                             </div>
                         {% endfor %}
                     {% else %}

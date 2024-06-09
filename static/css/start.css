@@ -118,10 +118,12 @@ nav ul li:last-child::after {/*移除最後一個導航項目的分隔線。*/
 }
 
 h2 {
+    font-weight: bold;
     font-size: 1.5rem;
     color: #333;
     border-bottom: 2px solid #d6dce3;
     padding-bottom: 5px;
+    margin-bottom: 20px;
 }
 
 .movies {
@@ -136,7 +138,8 @@ h2 {
 }
 
 .movie img {
-    width: 100px;
+    height: 400px;
+    width: 290px;
     object-fit: cover;
 }
 
