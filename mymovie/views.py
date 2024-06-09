@@ -423,37 +423,9 @@ def movieInformationDetails(request, movie_id):
     }
     return render(request, 'user_movieInformationDetails.html', context)
 
-
-# 快速購票
-# def orderTicket(request):
-#     if request.method == 'POST':
-#         form = OrderForm(request.POST)
-#         if form.is_valid():
-#             # Process the data in form.cleaned_data
-#             # (e.g., save booking info to the database)
-#             return redirect('orderTicketRecord')  # Redirect after successful booking
-#     else:
-#         form = OrderForm()
-#     return render(request, 'user_orderTicket.html', {'form': form})
-
-# def orderTicketRecord(request):
-#     return render(request, 'user_orderTicketRecord.html')
-
-# def get_sessions(request):
-#     movie_id = request.GET.get('movie_id')
-#     sessions = Session.objects.filter(movie_id=movie_id).order_by('session')
-#     session_options = '<option value="">請選擇電影場次</option>'
-#     for session in sessions:
-#         session_options += f'<option value="{session.pk}">{session.session}</option>'
-#     return JsonResponse(session_options, safe=False)
-
-
-from django.shortcuts import render, redirect
-from django.http import JsonResponse
-from .forms import OrderForm
-from .models import Ticket, Session
-
 def orderTicket(request):
+    if 'user_id' not in request.session:
+        return redirect(f'/loginMember/?next={request.path}')
     if request.method == 'POST':
         form = OrderForm(request.POST)
         if form.is_valid():
