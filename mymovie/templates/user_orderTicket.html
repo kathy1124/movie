@@ -1,14 +1,57 @@
 {% extends 'base.html' %}
+
 {% block headmessage %}
 <link rel="stylesheet" href="/static/css/orderTicket.css">
 <div class="main-content">
    <p style="font-size: 30px;margin: 0; height: 70px;text-align: center; display: flex;align-items: center; justify-content: center;">購票</p>
 </div>
 {% endblock %}
+
 {% block content %}
 <form method="post">
   {% csrf_token %}
-  {{ form.as_p }}
+  {{ form.movie.label_tag }}<br>
+  {{ form.movie }}<br><br>
+
+  {{ form.session.label_tag }}<br>
+  <select id="id_session" name="session">
+    <option value="">請先選擇電影</option>
+  </select><br><br>
+
+  {{ form.ticket_quantity.label_tag }}<br>
+  {{ form.ticket_quantity }}<br><br>
+
+  {{ form.payment_method.label_tag }}<br>
+  {{ form.payment_method }}<br><br>
+
   <button type="submit">Book</button>
 </form>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var sessionField = $('#id_session');
+        var movieField = $('#id_movie');
+
+        sessionField.prop('disabled', true);
+
+        movieField.change(function() {
+            var movieId = $(this).val();
+            if (movieId) {
+                $.ajax({
+                    url: '{% url "get_sessions" %}',
+                    data: {
+                        'movie_id': movieId
+                    },
+                    success: function(data) {
+                        sessionField.html(data);
+                        sessionField.prop('disabled', false);
+                    }
+                });
+            } else {
+                sessionField.prop('disabled', true);
+                sessionField.html('<option value="">請先選擇電影</option>');
+            }
+        });
+    });
+</script>
 {% endblock %}

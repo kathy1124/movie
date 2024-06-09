@@ -1,6 +1,6 @@
 
 from django import forms
-from .models import Movie, Member_data, Session
+from .models import Movie, Member_data, Session, Ticket
 
 
 class MovieForm(forms.ModelForm):
@@ -57,12 +57,29 @@ class ManagerForgetForm(forms.Form):
     manager_pw = forms.CharField(label='新密碼', widget=forms.PasswordInput)
     manager_pwc = forms.CharField(label='確認新密碼', widget=forms.PasswordInput)
 
-class OrderForm(forms.Form):
-    movie = forms.ModelChoiceField(queryset=Movie.objects.all(), label="電影名稱")
-    session = forms.ModelChoiceField(queryset=Session.objects.all(), label="電影場次")
+class OrderForm(forms.ModelForm):
+    movie = forms.ModelChoiceField(queryset=Movie.objects.all(), label="電影名稱", empty_label="請選擇電影")
+    session = forms.ModelChoiceField(queryset=Session.objects.none(), label="電影場次", empty_label="請先選擇電影")
     ticket_quantity = forms.ChoiceField(choices=[(i, str(i)) for i in range(1, 11)], label="票卷張數")
     PAYMENT_CHOICES = [
-        ('cash', '現金'),
+        ('money', '現金'),
         ('credit_card', '信用卡')
     ]
     payment_method = forms.ChoiceField(choices=PAYMENT_CHOICES, label="付款方式")
+
+    class Meta:
+        model = Ticket
+        fields = ['session_id', 'ticket_amount', 'payment_method']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['session'].queryset = Session.objects.none()
+
+        if 'movie' in self.data:
+            try:
+                movie_id = int(self.data.get('movie'))
+                self.fields['session'].queryset = Session.objects.filter(movie_id=movie_id).order_by('session')
+            except (ValueError, TypeError):
+                self.fields['session'].queryset = Session.objects.none()
+        elif self.instance and self.instance.pk:
+            self.fields['session'].queryset = self.instance.movie.session_set.order_by('session')
