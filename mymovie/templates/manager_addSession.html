@@ -1,17 +1,59 @@
-{% extends 'base2.html' %}
-{% block content%}
-<form method="post">
-    {% csrf_token %}
-    <label for="movie">電影:</label>
-    <select id="movie" name="movie">
-        {% for movie in movies %}
-            <option value="{{ movie.pk }}">{{ movie.movie_name }}</option>
-        {% endfor %}
-    </select>
-    
-    <label for="session">場次：</label>
-    <input type="text" id="session" name="session" required>
-    
-    <input type="submit" class="btn btn-outline-success" value="新增">
-</form>
-{% endblock %}
+{% include 'header2.html' %}
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新增場次</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/addMovie.css' %}"/>
+</head>
+<body>
+    <main>
+        <section class="movie-form">
+            {% if message %}
+                <div class='alert alert-warning'>{{ message }}</div>
+            {% endif %}
+            <form method="post">
+                {% csrf_token %}
+                <label for="movie">電影:</label>
+                <select id="movie" name="movie">
+                    {% for movie in movies %}
+                        <option value="{{ movie.pk }}">{{ movie.movie_name }}</option>
+                    {% endfor %}
+                </select>
+                
+                <label for="session">場次：</label>
+                <input type="text" id="session" name="session" required>
+                <div class="form-buttons">
+                    <button type="reset">重設</button>
+                    <button type="submit">儲存</button>
+                </div>
+                <button id="scrollToTop" class="scroll-to-top">↑</button>
+                <script>
+                    // 顯示或隱藏按鈕
+                    window.onscroll = function() {
+                        var scrollToTopButton = document.getElementById("scrollToTop");
+                        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                            scrollToTopButton.style.display = "block";
+                        } else {
+                            scrollToTopButton.style.display = "none";
+                        }
+                    };
+
+                    // 點擊按鈕回到頁面頂部
+                    document.getElementById("scrollToTop").onclick = function() {
+                        document.body.scrollTop = 0; // For Safari
+                        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+                    };
+                </script>
+            </form>
+        </section>
+    </main>
+
+</body>
+</html>
+
+
+

@@ -1,34 +1,109 @@
-{% extends 'base2.html' %}
-{% block content %}
-<table class="table table-hover">
-  <thead>
-    <tr background="#cccccc">
-        <th>上映日期</th>
-        <th>導演</th>
-        <th>演員</th>   
-        <th>類型</th>
-        <th>劇情片長</th>
-        <th>放映場次</th>
-        <th>圖片</th>
-    </tr>
-  </thead>
-{{ movie.movie_name }}
-  <tbody>
-    <tr background='{% cycle "#ffccff" "#ccffcc" %}'>
-      <td>{{ movie.date }}</td>
-      <td>{{ movie.director }}</td>
-      <td>{{ movie.actor }}</td>
-      <td>{{ movie.type }}</td>
-      <td>{{ movie.length }}</td>
-      <td>
-          {% for session in ses %}
-            <a>{{ session.session }}</a>
-          {% endfor %}
-      </td>
-      <td><img src="{{ movie.picture }}" height=250px></td>
-      <td>{{ movie.get_show_display  }}</td>
-      <td><a href="{% url 'editMovie' movie.movie_no %}">edit</a></td>
-    </tr>
-  </tbody>
-</table>
-{% endblock content %}
+{% include 'header2.html' %}
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>顯示電影</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/showMovie.css' %}"/>
+</head>
+<body>
+    <main>
+        <section class="movie-form">
+            <form method="post">
+                <button id="backButton" class="back-button" onclick="history.back()">← 回上頁</button>
+                <div class="edit-delete-buttons">
+                    <button type="button" class="edit-button"><a href="{% url 'editMovie' movie.movie_no %}" style="text-decoration: none; color: black;">編輯</a></button>
+                    <button type="button" class="delete-button" onclick="showDeleteConfirmation()">刪除</button>
+                </div>
+
+                {% csrf_token %}
+                <div class="form-group">
+                    <a style="font-weight: bold; font-size: larger;">{{ movie.movie_name }}詳細資訊</a>
+                </div>
+                <div class="form-group">
+                    <label for="release-date" style="width: 20%;">上映日期</label>
+                    <div id="div1">
+                        <a>{{ movie.date }}</a>
+                    </div>
+                    <div id="div2">
+                        <a>{{ movie.get_show_display  }}</a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="actors">導演</label>
+                    <p>{{ movie.director }}</p>
+                </div>
+                <div class="form-group">
+                    <label for="genre">演員</label>
+                    <p id="p">{{ movie.actor }}</p>
+                </div>
+                <div class="form-group">
+                    <label for="duration">類型</label>
+                    <p>{{ movie.type }} </p>
+                </div>
+                <div class="form-group">
+                    <label for="showtimes">劇情片長</label>
+                    <p>{{ movie.length }}</p>
+                </div>
+                <div class="form-group">
+                    <label for="image-url">圖片</label>
+                    <img src="{{ movie.picture }}" height=250px>
+                </div>
+                <button id="scrollToTop" class="scroll-to-top">↑</button>
+                <script>
+                    // 顯示或隱藏按鈕
+                    window.onscroll = function() {
+                        var scrollToTopButton = document.getElementById("scrollToTop");
+                        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                            scrollToTopButton.style.display = "block";
+                        } else {
+                            scrollToTopButton.style.display = "none";
+                        }
+                    };
+    
+                    // 點擊按鈕回到頁面頂部
+                    document.getElementById("scrollToTop").onclick = function() {
+                        document.body.scrollTop = 0; // For Safari
+                        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+                    };
+                    // 顯示刪除確認對話框
+                    function showDeleteConfirmation() {
+                        document.getElementById("deleteConfirmation").style.display = "flex";
+                    }
+
+                    // 確認刪除
+                    function confirmDelete() {
+                        alert("電影已刪除！");
+                        document.getElementById("deleteConfirmation").style.display = "none";
+                        // 在這裡添加刪除電影的操作，例如提交表單或發送AJAX請求
+                    }
+
+                    // 取消刪除
+                    function cancelDelete() {
+                        document.getElementById("deleteConfirmation").style.display = "none";
+                    }
+                </script>    
+            </form>
+        </section>
+    </main>
+    <div id="deleteConfirmation" class="delete-confirmation">
+        <div class="delete-confirmation-content">
+            <p>要刪除這部電影嗎?</p>
+            <button id="confirmDelete" class="confirm-button" onclick="confirmDelete()"><a href="{% url 'deleteMovie' movie.movie_no %}" style="text-decoration: none; color: white;">刪除電影</a></button>
+            <button id="cancelDelete" class="cancel-button" onclick="cancelDelete()">取消</button>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

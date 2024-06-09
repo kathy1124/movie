@@ -6,13 +6,12 @@ from django import forms
 class MovieFilter(django_filters.FilterSet):
     search_type = django_filters.ChoiceFilter(
         choices=[
-            ('movie_name', 'Movie Name'),
-            ('date', 'Date'),
-            ('type', 'Type')
+            ('movie_name', '電影名稱'),
+            ('date', '上映日期'),
+            ('type', '類型')
         ],
-        empty_label='請選擇',
         method='filter_by_type',
-        widget=forms.Select(attrs={'class': 'form-control'})
+        widget=forms.Select(attrs={'class': 'form-control dropdown-toggle'})
     )
     search_text = django_filters.CharFilter(
         field_name='search_text',

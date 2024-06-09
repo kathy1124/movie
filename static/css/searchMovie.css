@@ -1,18 +1,237 @@
-.movie-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    width: 80%;
-    margin: auto;
+body {
+    font-family:Arial, Helvetica, sans-serif  ;/* 設置整個網頁的字體 */
+    margin: 0; /* 移除預設外邊距 */
+    padding: 0; /* 移除預設內邊距 */
+    background-color: #faf8fb; /* 設置背景顏色 */
 }
 
-.movie-item {
-    background: #f9f9f9;
+/* 頁眉和導航菜單樣式 */
+header {
+    background-color: #d6dce3;
     padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid #141414;
+    flex-shrink: 0; /* 固定 header 高度 */
 }
 
-form {
-    margin-bottom: 20px;
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
+
+nav ul li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    flex: 1;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 0 35px;
+    display: block;
+}
+
+nav ul li::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 50%; 
+    transform: translateY(-50%);
+    height: 65px;
+    border-right: 1px solid #0c0c0c;
+}
+
+nav ul li:last-child::after {
+    border: none;
+}
+
+/* 回上頁按鈕 */
+.back-button {
+    padding: 10px 20px;
+    font-size: 12px;
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    z-index: 1000; /* 保證按鈕在最上層 */
+    margin: 30px 10px 10px 10px; /* 設置外邊距 */
+}
+
+.back-button:hover {
+    background-color: #333;
+}
+
+.search-bar {
+    display: flex; /* 設置為彈性容器 */
+    font-size:larger;
+    justify-content: center; /* 水平置中 */
+    align-items: center; /* 垂直置中 */
+    margin: 2% 0; /* 設置上下外邊距 */
+}
+
+.search-bar input {
+    width: 50%; /* 設置寬度為50% */
+    padding: 10px; /* 設置內邊距 */
+    font-size: 1rem; /* 設置字體大小 */
+    border: 1px solid #ccc; /* 設置邊框 */
+    height: 40px; /* 設置高度 */
+    box-sizing: border-box; /* 包含邊框和內邊距 */
+}
+
+.search-bar .dropdown {
+    position: relative; /* 設置定位方式 */
+    display: inline-block; /* 設置為行內塊元素 */
+    margin-right: 1%; /* 設置右外邊距 */
+}
+
+.search-bar .dropbtn {
+    background-color: #fffefa; /* 設置按鈕背景顏色 */
+    color: #333; /* 設置按鈕文字顏色 */
+    font-size: 1rem; /* 設置字體大小 */
+    border: 1px solid #ccc; /* 設置邊框 */
+    cursor: pointer; /* 設置鼠標樣式 */
+    height: 40px; /* 設置高度 */
+    width: 120px; /* 設置寬度 */
+    box-sizing: border-box; /* 包含邊框和內邊距 */
+    border-radius: 5px;
+    padding: 0 10px; /* 設置內邊距 */
+}
+
+.search-bar .dropdown-content {
+    display: none; /* 隱藏下拉內容 */
+    position: absolute; /* 絕對定位 */
+    background-color: #fff; /* 設置背景顏色 */
+    border-radius: 5px;
+    min-width: 120px; /* 設置最小寬度 */
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); /* 添加陰影效果 */
+    z-index: 1; /* 設置z-index */
+}
+
+.search-bar .dropdown-content a {
+    color: black; /* 設置連結文字顏色 */
+    padding: 12px 16px; /* 設置內邊距 */
+    text-decoration: none; /* 移除下劃線 */
+    display: block; /* 設置為塊級元素 */
+}
+
+.search-bar .dropdown-content a:hover {
+    background-color: #f1f1f1; /* 滑過時改變背景顏色 */
+}
+
+.search-bar .form-control dropdown-toggle:hover .dropdown-content {
+    display: block; /* 滑過時顯示下拉內容 */
+}
+
+.search-bar .form-control dropdown-toggle:hover .dropbtn {
+    background-color: #d6dce3; /* 滑過時改變按鈕背景顏色 */
+}
+
+.search-bar .search-button {
+    background-color: #fffefa; /* 設置按鈕背景顏色 */
+    border: 1px solid #ccc; /* 設置邊框 */
+    cursor: pointer; /* 設置鼠標樣式 */
+    font-size: 1rem; /* 設置字體大小 */
+    height: 40px; /* 設置高度 */
+    padding: 0 10px; /* 設置內邊距 */
+    margin-left: -2px; /* 調整與輸入框的間距 */
+    box-sizing: border-box; /* 包含邊框和內邊距 */
+}
+
+.search-bar .add-movie-button {
+    background-color: #fffefa; /* 設置按鈕背景顏色 */
+    border-radius: 5px;
+    border: 1px solid #ccc; /* 設置邊框 */
+    cursor: pointer; /* 設置鼠標樣式 */
+    font-size: 1rem; /* 設置字體大小 */
+    margin-left: 1%; /* 設置左外邊距 */
+    height: 40px; /* 設置高度 */
+    padding: 0 10px; /* 設置內邊距 */
+    box-sizing: border-box; /* 包含邊框和內邊距 */
+}
+
+.movie-list {
+    padding: 2%; /* 設置內邊距 */
+    font-size:larger;
+}
+
+.movie-list table {
+    width: 100%; /* 設置表格寬度 */
+    border-collapse: collapse; /* 合併邊框 */
+    text-align: center; /* 文字置中對齊 */
+}
+
+.movie-list th {
+    background-color: #fff7d3;  /* 設置表頭背景顏色 */
+    padding: 1%; /* 設置內邊距 */
+    width: 25vw;
+    height: 50px;
+    border: 1px solid #ddd; /* 設置邊框 */
+    font-size:large;
+}
+
+.movie-list td {
+    background-color:#fffefa;/* 設置表頭背景顏色 */
+    width: 25vw;
+    height: 50px;
+    font-weight: bold; /* 設置文字加粗 */
+}
+
+.movie-list tr{
+    border-bottom: 1px solid #fffefa;
+}
+  
+.movie-list tr:nth-of-type(even) td{
+    background-color:#fff7d3;
+}
+
+/* 偶數行的詳細資訊按鈕背景顏色 */
+.movie-list tr:nth-of-type(even) .details-button {
+    background-color: #fffefa; /* 與偶數行背景顏色一致 */
+}
+
+/* 奇數行的詳細資訊按鈕背景顏色 */
+.movie-list tr:nth-of-type(odd) .details-button {
+    background-color: #fff7d3; /* 與奇數行背景顏色一致 */
+    
+}
+
+.details-button {
+    border: none; /* 移除邊框 */
+    border-radius: 20px;
+    padding: 3% 3%; /* 設置內邊距 */
+    cursor: pointer; /* 設置鼠標樣式 */
+    font-size: 1rem; /* 設置字體大小 */
+    text-align: center; /* 文字置中 */
+}
+
+.scroll-to-top {
+    display: none; /* 隱藏按鈕 */
+    position: fixed; /* 固定定位 */
+    bottom: 5%; /* 距離底部5% */
+    right: 2%; /* 距離右邊2% */
+    z-index: 99; /* 設置z-index */
+    border: none; /* 移除邊框 */
+    outline: none; /* 移除輪廓 */
+    background-color: #555; /* 設置背景顏色 */
+    color: white; /* 設置文字顏色 */
+    cursor: pointer; /* 設置鼠標樣式 */
+    padding: 1%; /* 設置內邊距 */
+    border-radius: 10px; /* 設置圓角 */
+}
+
+.scroll-to-top:hover {
+    background-color: #333; /* 滑過時改變背景顏色 */
+}
+

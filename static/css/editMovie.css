@@ -1,0 +1,186 @@
+/* 全局樣式設置 */
+body {
+    font-family: Arial, sans-serif; /* 字體設置 */
+    margin: 0; /* 去除默認邊距 */
+    padding: 0; /* 去除默認填充 */
+    background-color: #fbf8fb; /* 頁面背景顏色 */
+}
+
+/* 頁眉和導航菜單樣式 */
+header {
+    background-color: #d6dce3;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid #141414;
+    flex-shrink: 0; /* 固定 header 高度 */
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+nav ul li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    flex: 1;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 0 35px;
+    display: block;
+}
+
+nav ul li::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 65px;
+    border-right: 1px solid #0c0c0c;
+}
+
+nav ul li:last-child::after {
+    border: none;
+}
+
+/* 回上頁按鈕 */
+.back-button {
+    padding: 10px 20px;
+    font-size: 12px;
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius:     5px;
+    cursor: pointer;
+    z-index: 1000; /* 保證按鈕在最上層 */
+    margin-right: 10px;
+}
+
+.back-button:hover {
+    background-color: #333;
+}
+
+/* 電影表單樣式 */
+.movie-form {
+    margin: 20px auto; /* 上下外邊距，水平居中 */
+    padding: 20px; /* 內部填充 */
+    width: 80%; /* 表單寬度 */
+    background-color: #ffffff; /* 表單背景顏色 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 表單陰影 */
+    font-size: 16px; 
+}
+
+/* 電影名稱樣式 */
+#movie-name {
+    font-size: 30px; /* 放大字體 */
+    font-weight: bold; /* 加粗 */
+}
+
+/* 表單組樣式 */
+.form-group {
+    font-size: 20px; 
+    display: flex; /* 使用 flexbox 佈局 */
+    align-items: center; /* 垂直居中對齊 */
+    margin-bottom: 20px; /* 組與組之間的間距 */
+}
+
+.form-group > label {
+    width: 15%; /* 標籤寬度 */
+    margin-right: 10px; /* 標籤和輸入框之間的距離 */
+    color: #333; /* 標籤文本顏色 */
+    text-align: right; /* 標籤文本右對齊 */
+}
+
+.form-group > div {
+    display: flex;
+    flex: 1;
+    align-items: center;
+}
+
+.form-group input, .form-group select, .form-group textarea {
+    width: 90%; /* 輸入框寬度 */
+    padding: 10px; /* 內部填充 */
+    background-color: #f8f6ea;
+    box-sizing: border-box; /* 包括內填充和邊框在內 */
+    border: 1px solid #ccc; /* 邊框顏色 */
+    border-radius: 4px; /* 圓角邊框 */
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+/* 表單按鈕樣式 */
+.form-buttons {
+    display: flex;/* 使用 flexbox 佈局 */
+    justify-content: flex-end; /* 按鈕靠右排列 */
+}
+.form-buttons button {
+    padding: 10px 20px; /* 按鈕內部填充 */
+    border-radius: 4px; /* 圓角邊框 */
+    border: 1px solid #b3b0b0; /* 邊框顏色 */
+    cursor: pointer; /* 鼠標懸停時顯示手型 */
+    background-color: #bcd7f2; /* 儲存按鈕背景顏色 */
+    color: rgb(17, 17, 17); /* 按鈕文本顏色 */
+}
+
+.form-buttons button[type="reset"] {
+    background-color: #bcd7f2; /* 重設按鈕背景顏色 */
+    color: rgb(17, 17, 17); /* 按鈕文本顏色 */
+}
+
+.scroll-to-top {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 99;
+    border: none;
+    outline: none;
+    background-color: #555;
+    color: white;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.scroll-to-top:hover {
+    background-color: #333;
+}
+
+.edit-delete-buttons {
+    display: flex;/* 使用 flexbox 佈局 */
+    justify-content: flex-end; /* 按鈕靠右排列 */
+    top: 10px; /* 距離頂部 */
+}
+
+.edit-button, .delete-button {
+    background-color: #4CAF50; /* 編輯按鈕背景顏色 */
+    border: none; /* 無邊框 */
+    color: rgb(17, 16, 16); /* 按鈕文本顏色 */
+    padding: 10px 20px; /* 內部填充 */
+    text-align: center; /* 文本居中 */
+    display: flex; /* 行內塊元素 */
+    justify-content: flex-end; /* 按鈕靠右排列 */
+    font-size: 12px; /* 字體大小 */
+    margin: 4px 2px; /* 外邊距 */
+    cursor: pointer; /* 鼠標樣式 */
+    border-radius: 20px; /* 圓角邊框 */
+}
+
+.delete-button {
+    background-color: #f44336; /* 刪除按鈕背景顏色 */
+}

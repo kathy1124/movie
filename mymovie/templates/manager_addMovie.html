@@ -1,42 +1,98 @@
-{% extends 'base2.html' %}
-{% block content %}
-<form action="/addMovie/" method="post">
-    {% csrf_token %}
-    <div class="movie_name">
-        <label for="movie_name">電影： </label>
-        <input type="text" name="movie_name">
-    </div>
-    <div class="date">
-        <label for="date">日期： </label>
-        <input type="date" name="date" id="">
-    
-        <select name="show" required>
-            {% for value, display in CHOICES %}
-                <option value="{{ value }}">{{ display }}</option>
-            {% endfor %}
-        </select>
-    </div>
-    <div>
-        <label for="director">導演：</label>
-        <input type="text" name="director">
-    </div>
-    <div>
-        <label for="actor">演員：</label>
-        <input type="text" name="actor">
-    </div>
-    <div>
-        <label for="type">類型：</label>
-        <input type="text" name="type">
-    </div>
-    <div>
-        <label for="length">長度：</label>
-        <input type="text" name="length">
-    </div>
-    <div>
-        <label for="picture">圖片：</label>
-        <input type="text" name="picture">
-    </div>
-    <input type="submit" class="btn btn-outline-success" value="新增">
-    <input type="reset" class="btn btn-outline-info" value="清除重填">
-</form>
-{% endblock content %}
+{% include 'header2.html' %}
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新增電影</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/addMovie.css' %}"/>
+</head>
+<body>
+    <main>
+        <section class="movie-form">
+            {% if message %}
+                <div class='alert alert-warning'>{{ message }}</div>
+            {% endif %}
+            <form action="/addMovie/" method="post">
+                {% csrf_token %}
+                <button id="backButton" class="back-button" onclick="history.back()">← 回上頁</button>
+                <!-- 電影名稱輸入框 -->
+                    
+                    <div class="form-group">
+                        <label for="movie_name"></label>
+                        <input type="text" id="movie_name" name="movie_name" placeholder="電影名稱">
+                    </div>
+
+                    <!-- 上映日期輸入框 -->
+                    <div class="form-group">
+                        <label for="date" style="width: 20%;">上映日期</label>
+                        <input type="date" id="date" name="date" style="width:90%; display: inline-block; margin-right: 10px;">
+                        <!-- 將狀態放在上映日期後面 -->
+                        <select id="release-status" name="show" style="width:30%; display: inline-block;" required>
+                            {% for value, display in CHOICES %}
+                                <option value="{{ value }}">{{ display }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- 導演輸入框 -->
+                    <div class="form-group">
+                        <label for="director">導演</label>
+                        <input type="text" id="director" name="director">
+                    </div>
+
+                    <!-- 演員文本區域 -->
+                    <div class="form-group">
+                        <label for="actor">演員</label>
+                        <textarea id="actor" name="actor"></textarea>
+                    </div>
+
+                    <!-- 類型輸入框 -->
+                    <div class="form-group">
+                        <label for="type">類型</label>
+                        <input type="text" id="type" name="type">
+                    </div>
+
+                    <!-- 劇情片長輸入框 -->
+                    <div class="form-group">
+                        <label for="length">劇情片長</label>
+                        <input type="text" id="length" name="length">
+                    </div>
+                    
+                    <!-- 圖片(網址)輸入框 -->
+                    <div class="form-group">
+                        <label for="picture">圖片</label>
+                        <input type="url" id="picture" name="picture">
+                    </div>
+
+                    <!-- 表單按鈕（重設和儲存） -->
+                    <div class="form-buttons">
+                        <button type="reset">重設</button>
+                        <button type="submit">儲存</button>
+                    </div>
+                <button id="scrollToTop" class="scroll-to-top">↑</button>
+                <script>
+                    // 顯示或隱藏按鈕
+                    window.onscroll = function() {
+                        var scrollToTopButton = document.getElementById("scrollToTop");
+                        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                            scrollToTopButton.style.display = "block";
+                        } else {
+                            scrollToTopButton.style.display = "none";
+                        }
+                    };
+
+                    // 點擊按鈕回到頁面頂部
+                    document.getElementById("scrollToTop").onclick = function() {
+                        document.body.scrollTop = 0; // For Safari
+                        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+                    };
+                </script>
+            </form>
+        </section>
+    </main>
+
+</body>
+</html>

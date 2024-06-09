@@ -1,11 +1,86 @@
-{% extends 'base2.html' %}
-{% block content %}
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save Changes</button>
-</form>
-{% endblock %}
+{% include 'header2.html' %}
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>編輯電影</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/editMovie.css' %}"/>
+</head>
+<body>
+    <main>
+        <section class="movie-form">
+            {% if message %}
+                <div class='alert alert-warning'>{{ message }}</div>
+            {% endif %}
+            <form method="post">
+                <button id="backButton" class="back-button" onclick="history.back()">← 回上頁</button>
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="release-date" style="width: 20%;">電影名稱</label>
+                    {{ form.movie_name }}
+                </div>
+                <div class="form-group">
+                    <label for="release-date" style="width: 20%;">上映日期</label>
+                    {{ form.date }}
+                </div>
+                <div class="form-group">
+                    <label for="director"></label>
+                    {{ form.show }}
+                </div>
+                <div class="form-group">
+                    <label for="actors">導演</label>
+                    {{ form.director }}
+                </div>
+                <div class="form-group">
+                    <label for="genre">演員</label>
+                    {{ form.actor }}
+                </div>
+                <div class="form-group">
+                    <label for="duration">類型</label>
+                    {{ form.type }}
+                </div>
+                <div class="form-group">
+                    <label for="showtimes">劇情片長</label>
+                    {{ form.length }}
+                </div>
+                <div class="form-group">
+                    <label for="image-url">圖片</label>
+                    {{ form.picture }}
+                </div>
+                <div class="form-buttons">
+                    <button type="submit">儲存</button>
+                </div>
+                
+                <button id="scrollToTop" class="scroll-to-top">↑</button>
+                <script>
+                    // 顯示或隱藏按鈕
+                    window.onscroll = function() {
+                        var scrollToTopButton = document.getElementById("scrollToTop");
+                        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                            scrollToTopButton.style.display = "block";
+                        } else {
+                            scrollToTopButton.style.display = "none";
+                        }
+                    };
+    
+                    // 點擊按鈕回到頁面頂部
+                    document.getElementById("scrollToTop").onclick = function() {
+                        document.body.scrollTop = 0; // For Safari
+                        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+                    };
+                </script>    
+            </form>
+        </section>
+    </main>
+
+</body>
+</html>
+
+
+
 
 
 
