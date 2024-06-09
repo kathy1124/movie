@@ -1,40 +1,69 @@
 {% extends 'base2.html' %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/searchMember.css' %}" />
+
 {% block headmessage %}
-<div class="main-content" style="text-align:center; align-items:center; justify-content: center; display: flex;">
-   <p style="font-size: 30px;margin: 0; height: 70px;text-align: center; display: flex;align-items: center;">會員購票紀錄</p>
+<div class="main-content" style="text-align: center; align-items: center; justify-content: center; display: flex;">
+  <p style="font-size: 30px; margin: 0; height: 70px; text-align: center; display: flex; align-items: center; text-align: justify;">
+    會員購票紀錄
+  </p>
 </div>
 {% endblock %}
+
 {% block content %}
-<div style="text-align:center; align-items:center; justify-content: center; display: flex;">
-    <form method="POST" action="{% url 'searchTicket' %}">
-        {% csrf_token %}
-        <strong for="member_no">會員編號</strong>
-        <input type="text" id="member_no" name="member_no" required>
-        <input type="submit" class="btn btn-outline-success" value="查詢" />
-    </form>
-</div>
-<div style="text-align:center; align-items:center; justify-content: center; display: flex;">
-    {% if member_info %}
-        <p>會員帳號: {{ member_info.member_account }}</p>
-        <div class="ticket-info">
-            {% for ticket in member_info.tickets %}
-                <div class="ticket-row">
-                    <div>電影名稱: {{ ticket.movie_name }}</div>
-                    <div>電影場次: {{ ticket.session }}</div>
-                    <div>票卷張數: {{ticket.ticket_amount}}</div>
-                    <div>付款方式: {{ ticket.payment_method }}</div>
-                </div>
-            {% endfor %}
+
+<div style="display: flex; justify-content: center; align-items: center; flex-direction: column; text-align: justify;">
+
+  <form method="POST" action="{% url 'searchTicket' %}" style="text-align: center;">
+    {% csrf_token %}
+    <div style="margin: 10px;">
+      <label for="member_no" style="color: rgb(53, 37, 117); font-size: 20px; margin: 10px;">會員編號</label>
+      <input type="text" id="member_no" name="member_no" required style="margin: 10px;"/>
+      <button type="submit" style="margin: 10px;">查詢</button>
+    </div>
+  </form>
+
+{% if member_info %}
+
+  <div class="ticket-info" style="text-align: center; margin: 20px; text-align: justify; font-size: 20px; background-color: #ccc; padding: 1em;">
+    
+    {% for ticket in member_info.tickets %}
+      <div class="ticket-info-item" style="margin: 10px;">
+        <div style="margin-bottom: 5px;">
+          <label style="width: 100px; display: inline-block;">電影名稱</label>
+          <label style="border: solid 1px #000; padding: 5px; display: inline-block;">{{ ticket.movie_name }}</label>
         </div>
-    {% elif member_info is not None %}
-        <p>No member found with the provided member number.</p>
-    {% endif %}
+        <div style="margin-bottom: 5px;">
+          <label style="width: 100px; display: inline-block;">電影類型</label>
+          <label style="border: solid 1px #000; padding: 5px; display: inline-block;">{{ ticket.session }}</label>
+        </div>
+        <div style="margin-bottom: 5px;">
+          <label style="width: 100px; display: inline-block;">電影場次</label>
+          <label style="border: solid 1px #000; padding: 5px; display: inline-block;">{{ ticket.session }}</label>
+        </div>
+        <div style="margin-bottom: 5px;">
+          <label style="width: 100px; display: inline-block;">票卷張數</label>
+          <label style="border: solid 1px #000; padding: 5px; display: inline-block;">{{ ticket.ticket_amount }}</label>
+        </div>
+        <div style="margin-bottom: 5px;">
+          <label style="width: 100px; display: inline-block;">付款方式</label>
+          <label style="border: solid 1px #000; padding: 5px; display: inline-block;">{{ ticket.payment_method }}</label>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+{% elif member_info is not None %}
+  <p style="margin: 10px; text-align: center; text-align: justify;">No member found with the provided member number.</p>
+{% endif %}
+
 </div>
+
 <!-- Button trigger modal
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
     Launch demo modal
   </button> -->
-  
+
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">

@@ -4,37 +4,47 @@
 
 {% block headmessage %}
 <div class="main-content" style="text-align: center; align-items: center; justify-content: center; display: flex;">
-  <p style="font-size: 30px; margin: 0; height: 70px; text-align: center; display: flex; align-items: center;">
+  <p style="font-size: 30px; margin: 0; height: 70px; text-align: center; display: flex; align-items: center; text-align: justify;">
     會員資料
   </p>
 </div>
 {% endblock %}
 
 {% block content %}
-<div style="text-align: center; align-items: center; justify-content: center; display: flex;">
-  <form method="POST" action="{% url 'searchMember' %}">
-    {% csrf_token %}
-    <label for="member_no" style="color: rgb(53, 37, 117); font-size: 20px">會員編號:</label>
-    <input type="text" id="member_no" name="member_no" required />
-    <button type="submit">搜尋</button>
-  </form>
-</div>
 
-<div style="text-align:center; align-items:center; justify-content: center; display: flex;">
-  {% if member_info %}
-  <div class="member-info">
-    <div class="member-info-item">
-      <p>會員帳號: {{ member_info.member_account }}</p>
+<div style="display: flex; justify-content: center; align-items: center; flex-direction: column; text-align: justify;">
+
+  <form method="POST" action="{% url 'searchMember' %}" style="text-align: center;">
+    {% csrf_token %}
+    <div style="margin: 10px;">
+      <label for="member_no" style="color: rgb(53, 37, 117); font-size: 20px; margin: 10px;">會員編號</label>
+      <input type="text" id="member_no" name="member_no" required style="margin: 10px;"/>
+      <button type="submit" style="margin: 10px;">搜尋</button>
     </div>
-    <div class="member-info-item">
-      <p>電子信箱: {{ member_info.gmail }}</p>
+  </form>
+
+{% if member_info %}
+
+  <div class="member-info" style="text-align: center; margin: 20px; text-align: justify; font-size: 20px;background-color: #ccc;padding: 1em;">
+    <div class="member-info-item" style="margin: 10px;">
+      <label style="width: 100px; display: inline-block;">會員帳號</label>
+      <label style="border: solid 1px #000; padding: 5px; display: inline-block;" required>{{ member_info.member_account }}</label>
     </div>
-    <div class="member-info-item">
-      <p>手機號碼: {{ member_info.phone_number }}</p>
+
+    <div class="member-info-item" style="margin: 10px;">
+      <label style="width: 100px; display: inline-block;">電子信箱</label>
+      <label style="border: solid 1px #000; padding: 5px; display: inline-block;" required>{{ member_info.gmail }}</label>
+    </div>
+
+    <div class="member-info-item" style="margin: 10px;">
+      <label style="width: 100px; display: inline-block;">手機號碼</label>
+      <label style="border: solid 1px #000; padding: 5px; display: inline-block;" required>{{ member_info.phone_number }}</label>
     </div>
   </div>
-  {% elif member_info is not None %}
-  <p>No member found with the provided member number.</p>
-  {% endif %}
+
+{% elif member_info is not None %}
+  <p style="margin: 10px; text-align: center; text-align: justify;">No member found with the provided member number.</p>
+{% endif %}
+
 </div>
 {% endblock %}
