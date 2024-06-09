@@ -424,8 +424,13 @@ def movieInformationDetails(request, movie_id):
     return render(request, 'user_movieInformationDetails.html', context)
 
 def orderTicket(request):
-    if 'user_id' not in request.session:
+    if 'member_id' not in request.session:
         return redirect(f'/loginMember/?next={request.path}')
+    member_info = None
+    if request.method == 'POST':
+        member_no = request.POST.get('member_no')
+        if member_no:
+            member_info = search_member_info(member_no)
     if request.method == 'POST':
         form = OrderForm(request.POST)
         if form.is_valid():
