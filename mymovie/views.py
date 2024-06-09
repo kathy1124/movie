@@ -15,8 +15,6 @@ def home(request):
 # -------------------------------------------------------------------------------------------------------------
 # Manager
 # 註冊
-
-
 def registerManager(request):
     CHOICES = (
         ('it', 'IT部門'),
@@ -52,6 +50,7 @@ def registerManager(request):
 
 # 登入
 def loginManager(request):
+    message=""
     if request.method == 'GET':
         form = ManagerLoginForm()
         next_url = request.GET.get('next', '/accountCenter/')
@@ -97,7 +96,7 @@ def forgetManager(request):
                     manager = Staff_data.objects.get(staff_account=manager_id)
                     manager.staff_password = make_password(manager_pw)
                     manager.save()
-                    message = "成功更改密碼 請重新登入"
+                    return redirect('/loginManager/')
                     # return redirect('/loginMember/')
                 except Staff_data.DoesNotExist:
                     message = "此帳號不存在"
@@ -300,9 +299,8 @@ def searchMember(request):
 # ---------------------------------------------------------------------------------------------------------------
 # User
 # 註冊
-
-
 def registerMember(request):
+    message=""
     if request.method == 'POST':
         register_form = MemberRegisterForm(request.POST)
         if register_form.is_valid():
@@ -315,10 +313,9 @@ def registerMember(request):
             if member_pw == member_pwc:
                 if not Member_data.objects.filter(member_account=member_id).exists():
                     pw = make_password(member_pw)
-                    member = Member_data.create_member_data(
-                        member_id, pw, member_mail, member_phone)
+                    member = Member_data.create_member_data(member_id, pw, member_mail, member_phone)
                     member.save()
-                    message = "註冊成功! 請點選「會員中心」進行登入"
+                    return redirect('/loginMember/')
                 else:
                     message = "帳號已經存在"
             else:
@@ -327,12 +324,11 @@ def registerMember(request):
             message = "請檢查輸入的欄位內容"
     else:
         register_form = MemberRegisterForm()
-    return render(request, 'user_register.html', locals())
+    return render(request, 'user_register.html', {'form': register_form, 'message': message})
 
 # 登入會員
-
-
 def loginMember(request):
+    message=""
     if request.method == 'GET':
         form = MemberLoginForm()
         return render(request, 'user_login.html', {'form': form})

@@ -15,6 +15,9 @@
             {% if message %}
             <div class='alert alert-warning'>{{ message }}</div>
             {% endif %}
+            {% if form.member_pw.errors %}
+            <div class="alert alert-warning ">{{ form.member_pw.errors }}</div>
+            {% endif %}
             <form action = "" method="post">
                 {% csrf_token %}
                 <div class="alert alert-warning"></div>

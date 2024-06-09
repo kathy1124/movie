@@ -27,6 +27,13 @@ class MemberRegisterForm(forms.Form):
     member_pwc = forms.CharField(label='輸入確認密碼', widget=forms.PasswordInput)
     member_mail = forms.EmailField(label='電子信箱')
     member_phone = forms.CharField(label='手機號碼', max_length=15)
+    def clean_member_pw(self):
+        member_pw = self.cleaned_data.get('member_pw')
+        if len(member_pw) < 8:
+            raise forms.ValidationError("密碼長度不能少於8個字元")
+        elif len(member_pw) >20 :
+            raise forms.ValidationError("密碼長度不能超過20個字元")
+        return member_pw
 
 class MemberLoginForm(forms.Form):
     member_id = forms.CharField(label='您的帳號', max_length=50)
@@ -36,7 +43,14 @@ class MemberForgetForm(forms.Form):
     member_id = forms.CharField(label='您的帳號', max_length=50)
     member_pw = forms.CharField(label='新密碼', widget=forms.PasswordInput)
     member_pwc = forms.CharField(label='確認新密碼', widget=forms.PasswordInput)
-
+    def clean_member_pw(self):
+        member_pw = self.cleaned_data.get('member_pw')
+        if len(member_pw) < 8:
+            raise forms.ValidationError("密碼長度不能少於8個字元")
+        elif len(member_pw) >20 :
+            raise forms.ValidationError("密碼長度不能超過20個字元")
+        return member_pw
+    
 class ManagerRegisterForm(forms.Form):
     CHOICES = (
         ('it', 'IT部門'),
@@ -47,7 +61,14 @@ class ManagerRegisterForm(forms.Form):
     manager_department = forms.CharField(label='您的帳號', max_length=50)
     manager_pw = forms.CharField(label='輸入密碼', widget=forms.PasswordInput)
     manager_pwc = forms.CharField(label='輸入確認密碼', widget=forms.PasswordInput)
-
+    def clean_manager_pw(self):
+        manager_pw = self.cleaned_data.get('manager_pw')
+        if len(manager_pw) < 8:
+            raise forms.ValidationError("密碼長度不能少於8個字符")
+        elif len(manager_pw) >20 :
+            raise forms.ValidationError("密碼長度不能超過20個字符")
+        return manager_pw
+    
 class ManagerLoginForm(forms.Form):
     manager_id = forms.CharField(label='您的帳號', max_length=50)
     manager_pw = forms.CharField(label='輸入密碼', widget=forms.PasswordInput)
@@ -56,7 +77,14 @@ class ManagerForgetForm(forms.Form):
     manager_id = forms.CharField(label='您的帳號', max_length=50)
     manager_pw = forms.CharField(label='新密碼', widget=forms.PasswordInput)
     manager_pwc = forms.CharField(label='確認新密碼', widget=forms.PasswordInput)
-
+    def clean_manager_pw(self):
+        manager_pw = self.cleaned_data.get('manager_pw')
+        if len(manager_pw) < 8:
+            raise forms.ValidationError("密碼長度不能少於8個字元")
+        elif len(manager_pw) >20 :
+            raise forms.ValidationError("密碼長度不能超過20個字元")
+        return manager_pw
+    
 class OrderForm(forms.ModelForm):
     movie = forms.ModelChoiceField(queryset=Movie.objects.all(), label="電影名稱", empty_label="請選擇電影")
     session = forms.ModelChoiceField(queryset=Session.objects.none(), label="電影場次", empty_label="請先選擇電影")
