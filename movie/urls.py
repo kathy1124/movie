@@ -58,7 +58,7 @@ urlpatterns = [
 
     #聯絡我們 聯絡資訊
     path('contactUs',mv.contact,name='contactUs'),
-    path('contactInfo',mv.contact,name='contactInfo'),
+    path('contactInfo',mv.contactMar,name='contactInfo'),
 
     # 登入註冊忘記密碼登出
     path('registerMember/', mv.registerMember, name='registerMember'),

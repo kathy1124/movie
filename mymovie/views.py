@@ -298,6 +298,11 @@ def searchMember(request):
             member_info = search_member_info(member_no)
     return render(request, 'manager_searchMember.html', locals())
 
+
+# 聯絡我們
+def contactMar(request):
+    return render(request, "manager_contactInfo.html", locals())
+
 # ---------------------------------------------------------------------------------------------------------------
 # User
 # 註冊
