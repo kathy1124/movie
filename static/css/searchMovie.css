@@ -179,6 +179,8 @@ nav ul li:last-child::after {
     height: 50px;
     border: 1px solid #ddd; /* 設置邊框 */
     font-size:large;
+    vertical-align:middle; 
+    text-align: center;
 }
 
 .movie-list td {

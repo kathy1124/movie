@@ -267,12 +267,14 @@ def search_member_info(member_no):
             result['tickets'].append({
                 'session': session.session,
                 'movie_name': movie.movie_name,
+                'movie_type': movie.type,  # Added movie type here
                 'ticket_amount': ticket.ticket_amount,
                 'payment_method': payment_method_display.get(ticket.payment_method, ticket.payment_method)
             })
         return result
     except Member_data.DoesNotExist:
         return None
+
 
 
 def searchTicket(request):
