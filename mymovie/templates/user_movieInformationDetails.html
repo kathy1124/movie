@@ -1,28 +1,89 @@
-{% extends 'base.html' %} {% block content %}
-<div>
-  <h2>{{ movies.movie_name }}詳細資料</h2>
-  <br />
-  <ul>
-    <strong>上映日期</strong>
-    {{ movies.date }}<br />
-    <strong>導演:</strong>
-    {{ movies.director }}<br />
-    <strong>演員</strong>
-    {{ movies.actor }}<br />
-    <strong>類型</strong>
-    {{ movies.type }}<br />
-    <strong>劇情片長</strong>
-    {{ movies.length }}<br />
-    <strong>放映場次</strong>
-    <ul>
-        {% for session in sessions %}
-            <li>{{ session.session }}</li>
-        {% empty %}
-            <li>No sessions available</li>
-        {% endfor %}
-    </ul><br />
-    <strong>圖片</strong
-    ><img src="{{ movies.picture }}" height="250px" /><br />
-  </ul>
-</div>
-{% endblock %}
+{% include 'header2.html' %}
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>顯示電影</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/showMovie.css' %}"/>
+</head>
+<body>
+    <main>
+        <section class="movie-form">
+                <button id="backButton" class="back-button" onclick="history.back()"><a href="{% url 'movieInformation' %}" style="text-decoration: none; color: white;">← 回上頁</a></button>
+                <div class="edit-delete-buttons">
+                </div>
+                <div class="form-group">
+                    <a style="font-weight: bold; font-size: larger; margin-top: 20px;">{{ movies.movie_name }}詳細資訊</a>
+                </div>
+                <div class="form-group" id="edit">
+                    <label for="release-date" style="width: 20%;">上映日期</label>
+                    <div>
+                        <a>{{ movies.date }}</a>
+                    </div>
+                    <div>
+                        <a>{{ movies.get_show_display  }}</a>
+                    </div>
+                </div>
+                <div class="form-group" id="edit">
+                    <label for="actors">導演</label>
+                    <div>
+                        <p>{{ movies.director }}</p>
+                    </div>
+                </div>
+                <div class="form-group" id="edit">
+                    <label for="genre">演員</label>
+                    <div>
+                        <p id="p">{{ movies.actor }}</p>
+                    </div>
+                </div>
+                <div class="form-group" id="edit">
+                    <label for="duration">類型</label>
+                    <div>
+                        <p>{{ movies.type }} </p>
+                    </div>
+                </div>
+                <div class="form-group" id="edit">
+                    <label for="showtimes">劇情片長</label>
+                    <div>
+                        <p>{{ movies.length }}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="image-url"></label>
+                    <img src="{{ movies.picture }}" height=250px>
+                </div>
+                <button id="scrollToTop" class="scroll-to-top">↑</button>
+                <script>
+                    // 顯示或隱藏按鈕
+                    window.onscroll = function() {
+                        var scrollToTopButton = document.getElementById("scrollToTop");
+                        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                            scrollToTopButton.style.display = "block";
+                        } else {
+                            scrollToTopButton.style.display = "none";
+                        }
+                    };
+    
+                    // 點擊按鈕回到頁面頂部
+                    document.getElementById("scrollToTop").onclick = function() {
+                        document.body.scrollTop = 0; // For Safari
+                        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+                    };
+                </script>    
+        </section>
+    </main>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

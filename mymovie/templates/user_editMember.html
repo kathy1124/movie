@@ -1,26 +1,25 @@
 {% extends 'base.html' %}
 {% block content %}
 <button id="backButton" class="back-button" onclick="history.back()">← 回上頁</button>
-<div class="member-info" style="text-align: center; margin: 20px; text-align: justify; font-size: 20px; background-color: #ccc; padding: 1em;">
-
+<form method="post" class="member-info" style="text-align: center; margin: 20px; text-align: justify; font-size: 20px; background-color: #ccc; padding: 1em;">
+    {% csrf_token %}
     <div class="member-info-item" style="margin: 10px;">
         <label style="width: 100px; display: inline-block;">會員管理</label>
     </div>
     <div class="member-info-item" style="margin: 10px;">
         <label style="width: 100px; display: inline-block;">電子信箱</label>
-        <label required>{{ form.gmail }}</label>
+        <input type="email" name="gmail" value="{{ form.gmail.value }}" required style="width: 200px;">
     </div>
     <div class="member-info-item" style="margin: 10px;">
         <label style="width: 100px; display: inline-block;">手機號碼</label>
-        <label required>{{ form.phone_number }}</label>
+        <input type="text" name="phone_number" value="{{ form.phone_number.value }}" required style="width: 200px;">
     </div>
     
-
     <div style="display: flex; flex-direction: column; gap: 10px;">
         <div class="member-info-item" style="margin: 10px;">
-            <label style="width: 100px; display: inline-block;"><a href="{% url 'forgetMember' %}"style="text-decoration: none">密碼修改</a></label>
-            <button style="width: 100px; display: inline-block; margin: 5px;" onclick="window.location.href='{% url 'lookMember' %}'">儲存</button>
+            <label style="width: 100px; display: inline-block;"><a href="{% url 'forgetMember' %}" style="text-decoration: none">密碼修改</a></label>
+            <button type="submit" style="width: 100px; display: inline-block; margin: 5px;">儲存</button>
         </div>
     </div>
-</div>
+</form>
 {% endblock %}
