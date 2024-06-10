@@ -56,6 +56,9 @@ urlpatterns = [
     path('movieInformation/<int:movie_id>',
          mv.movieInformationDetails, name='movieInformationDetails'),
 
+    #聯絡我們 聯絡資訊
+    path('contactUs',mv.contact,name='contactUs'),
+    path('contactInfo',mv.contact,name='contactInfo'),
 
     # 登入註冊忘記密碼登出
     path('registerMember/', mv.registerMember, name='registerMember'),

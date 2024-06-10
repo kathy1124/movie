@@ -1,0 +1,15 @@
+.back-button {
+    padding: 10px 20px;
+    font-size: 12px;
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    z-index: 1000; /* 保證按鈕在最上層 */
+    margin: 30px 10px 10px 10px; /* 設置外邊距 */
+}
+
+.back-button:hover {
+    background-color: #333;
+}

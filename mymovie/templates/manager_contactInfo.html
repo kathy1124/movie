@@ -1,0 +1,55 @@
+{% include 'header2.html' %}
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>聯絡資訊</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/us.css' %}"/>
+</head>
+<body>
+    <button id="backButton" class="back-button" onclick="history.back()">← 回上頁</button>
+    <div class="content">
+        <div class="main-content">
+            <div class="store-info">
+                <h3>門市基本資訊</h3>
+                <div>
+                    <strong>西門店</strong>
+                    <p>地址：台北市萬華區xxxxxxxxxxx</p>
+                    <p>聯絡電話：02-11112222</p>
+                </div>
+                <div>
+                    <strong>京站店</strong>
+                    <p>地址：台北市中正區xxxxxxxxxxx</p>
+                    <p>聯絡電話：02-33334444</p>
+                </div>
+                <div class="store">
+                    <strong>信義店</strong>
+                    <p>地址：台北市信義區xxxxxxxxxxx</p>
+                    <p>聯絡電話：02-55556666</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button id="scrollToTop" class="scroll-to-top">↑</button>
+    <script>
+        // 顯示或隱藏按鈕
+        window.onscroll = function() {
+            var scrollToTopButton = document.getElementById("scrollToTop");
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                scrollToTopButton.style.display = "block";
+            } else {
+                scrollToTopButton.style.display = "none";
+            }
+        };
+
+        // 點擊按鈕回到頁面頂部
+        document.getElementById("scrollToTop").onclick = function() {
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+        };
+    </script>
+</body>
+</html>

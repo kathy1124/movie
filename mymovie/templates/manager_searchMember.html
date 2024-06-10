@@ -1,6 +1,7 @@
 {% extends 'base2.html' %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/searchMember.css' %}" />
+<link rel="stylesheet" href="{% static 'css/back.css' %}"/>
 
 {% block headmessage %}
 <div class="main-content" style="text-align: center; align-items: center; justify-content: center; display: flex;">
@@ -11,7 +12,7 @@
 {% endblock %}
 
 {% block content %}
-
+<button id="backButton" class="back-button" onclick="history.back()">← 回上頁</button>
 <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; text-align: justify;">
 
   <form method="POST" action="{% url 'searchMember' %}" style="text-align: center;">
