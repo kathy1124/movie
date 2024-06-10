@@ -1,10 +1,39 @@
 {% extends 'base.html' %}
 {% block content %}
-<button id="backButton" class="back-button" onclick="history.back()">← 回上頁</button>
-<div class="member-info" style="text-align: center; margin: 20px; text-align: justify; font-size: 20px;background-color: #ccc;padding: 1em;">
+<style>
+    .a{
+        position: absolute;
+        top: 15%; /* 以百分比定位到導航欄下方 */
+        left: 1%;
+        padding: 10px 20px;
+        font-size: 12px;
+        background-color: #555;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        z-index: 1000; /* 保證按鈕在最上層 */
+    }
+    .edit-button {
+        background-color: #BCD7F1; /* 編輯按鈕背景顏色 */
+        border: none; /* 無邊框 */
+        color: rgb(0, 0, 0); /* 按鈕文本顏色 */
+        padding: 10px 20px; /* 內部填充 */
+        text-align: center; /* 文本居中 */
+        display: flex; /* 行內塊元素 */
+        justify-content: flex-end; /* 按鈕靠右排列 */
+        font-size: 12px; /* 字體大小 */
+        margin: 4px 2px; /* 外邊距 */
+        cursor: pointer; /* 鼠標樣式 */
+        border-radius: 20px; /* 圓角邊框 */
+    }
+</style>
+
+<button class="a"  onclick="window.location.href='{% url 'home' %}'" >← 回上頁</button>
+<div class="member-info" style="text-align: center; margin: 100px; text-align: justify; font-size: 20px;background-color: #eff2ff;padding: 1em;">
 
     <div class="member-info-item" style="margin: 10px;">
-        <label style="width: 100px; display: inline-block;">會員管理</label>
+        <label style="width: 100px; display: inline-block; font-weight: bold; font-size: larger; color: #1B3067;">會員管理</label>
     </div>
     <div class="member-info-item" style="margin: 10px;">
         <label style="width: 100px; display: inline-block;">會員帳號</label>
@@ -22,8 +51,10 @@
     <div style="display: flex; flex-direction: column; gap: 10px;">
         <div class="member-info-item" style="margin: 10px;">
             <label style="width: 100px; display: inline-block;"><a href="{% url 'forgetMember' %}"style="text-decoration: none">密碼修改</a></label>
-            <button style="width: 100px; display: inline-block; margin: 5px;" onclick="window.location.href='{% url 'editMember' %}'">編輯</button>
-            <button style="width: 100px; display: inline-block; margin: 5px;" onclick="window.location.href='{% url 'logout' %}'">登出</button>
+        </div>
+        <div>
+            <button class="edit-button" style="width: 100px; display: inline-block; margin: 5px; font-weight: 800; font-size: 15px;" onclick="window.location.href='{% url 'editMember' %}'">編輯</button>
+            <button class="edit-button" style="width: 100px; display: inline-block; margin: 5px; font-weight: 800; font-size: 15px;" onclick="window.location.href='{% url 'logout' %}'">登出</button>
         </div>
     </div>
 </div>
