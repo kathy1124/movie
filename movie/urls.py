@@ -70,7 +70,7 @@ urlpatterns = [
     path('orderTicket/', mv.orderTicket, name='orderTicket'),
     # path('orderTicketConfirm/', mv.orderTicketConfirm, name='orderTicketConfirm'),
     path('orderTicketRecord/', mv.orderTicketRecord, name='orderTicketRecord'),
-	path('get_sessions/', mv.get_sessions, name='get_sessions'),
+
 
     # 會員中心
     path('lookMember/', mv.lookMember, name='lookMember'),

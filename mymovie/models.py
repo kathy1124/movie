@@ -44,7 +44,7 @@ class Ticket(models.Model):
         ('credit_card', '信用卡')
     )
     ticket_no = models.AutoField(primary_key=True)
-    ticket_member = models.ForeignKey('Member_data',on_delete=models.CASCADE )   # 删除了一个 Member_data 的資料，所有和 member 有關的紀錄也會删除
+    ticket_member = models.ForeignKey('Member_data',on_delete=models.CASCADE )   
     session_id = models.ForeignKey('Session',on_delete=models.CASCADE)
     ticket_amount = models.PositiveIntegerField()
     payment_method = models.CharField(max_length=100, choices=CHOICES)

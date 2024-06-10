@@ -85,29 +85,12 @@ class ManagerForgetForm(forms.Form):
             raise forms.ValidationError("密碼長度不能超過20個字元")
         return manager_pw
     
-class OrderForm(forms.ModelForm):
-    movie = forms.ModelChoiceField(queryset=Movie.objects.all(), label="電影名稱", empty_label="請選擇電影")
-    session = forms.ModelChoiceField(queryset=Session.objects.none(), label="電影場次", empty_label="請先選擇電影")
-    ticket_quantity = forms.ChoiceField(choices=[(i, str(i)) for i in range(1, 11)], label="票卷張數")
-    PAYMENT_CHOICES = [
-        ('money', '現金'),
-        ('credit_card', '信用卡')
-    ]
-    payment_method = forms.ChoiceField(choices=PAYMENT_CHOICES, label="付款方式")
+class OrderTicketForm(forms.ModelForm):
+    movie_name = forms.ModelChoiceField(queryset=Movie.objects.all(), label="電影名稱")
+    session = forms.ModelChoiceField(queryset=Session.objects.all(), label="場次")
+    ticket_amount = forms.IntegerField(min_value=1, label="票數")
+    payment_method = forms.ChoiceField(choices=Ticket.CHOICES, label="付款方式")
 
     class Meta:
         model = Ticket
-        fields = ['session_id', 'ticket_amount', 'payment_method']
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['session'].queryset = Session.objects.none()
-
-        if 'movie' in self.data:
-            try:
-                movie_id = int(self.data.get('movie'))
-                self.fields['session'].queryset = Session.objects.filter(movie_id=movie_id).order_by('session')
-            except (ValueError, TypeError):
-                self.fields['session'].queryset = Session.objects.none()
-        elif self.instance and self.instance.pk:
-            self.fields['session'].queryset = self.instance.movie.session_set.order_by('session')
+        fields = ['movie_name', 'session', 'ticket_amount', 'payment_method']

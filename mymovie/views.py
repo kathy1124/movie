@@ -2,7 +2,7 @@ from .filters import MovieFilter, MemberFilter, MovieTypeFilter
 from django.contrib.auth.hashers import make_password, check_password
 from django.shortcuts import get_object_or_404, redirect, render
 from .models import Member_data, Ticket, Movie, Staff_data, Session
-from .forms import MovieForm, MemberEditForm, MemberRegisterForm, MemberLoginForm, MemberForgetForm, ManagerRegisterForm, ManagerLoginForm, ManagerForgetForm, OrderForm
+from .forms import MovieForm, MemberEditForm, MemberRegisterForm, MemberLoginForm, MemberForgetForm, ManagerRegisterForm, ManagerLoginForm, ManagerForgetForm
 from django.contrib.auth import logout
 from django.http import JsonResponse
 
@@ -428,37 +428,39 @@ def movieInformationDetails(request, movie_id):
     }
     return render(request, 'user_movieInformationDetails.html', context)
 
+# 訂票
+from .forms import OrderTicketForm
 def orderTicket(request):
-    if 'member_id' not in request.session:
-        return redirect(f'/loginMember/?next={request.path}')
-    member_info = None
     if request.method == 'POST':
-        member_no = request.POST.get('member_no')
-        if member_no:
-            member_info = search_member_info(member_no)
-    if request.method == 'POST':
-        form = OrderForm(request.POST)
+        form = OrderTicketForm(request.POST)
         if form.is_valid():
-            ticket = form.save(commit=False)
-            # Assuming you have a way to get the current member
-            ticket.ticket_member = request.user.member_data
-            ticket.ticket_amount = form.cleaned_data['ticket_quantity']
+            # 從 session 中獲取會員帳號
+            member_id = request.session.get('member_id')
+            if not member_id:
+                return redirect('login_url')  # 如果沒有登入，重定向到登入頁面
+
+            member = get_object_or_404(Member_data, member_account=member_id)
+            ticket = Ticket()
+            ticket.ticket_member = member
+            ticket.session_id = form.cleaned_data['session']
+            ticket.ticket_amount = form.cleaned_data['ticket_amount']
+            ticket.payment_method = form.cleaned_data['payment_method']
             ticket.save()
-            return redirect('orderTicketRecord')
+            return redirect('/')  # 替換為實際的成功頁面 URL
     else:
-        form = OrderForm()
+        form = OrderTicketForm()
+    
     return render(request, 'user_orderTicket.html', {'form': form})
+
+
+
+
+
+
 
 def orderTicketRecord(request):
     return render(request, 'user_orderTicketRecord.html')
 
-def get_sessions(request):
-    movie_id = request.GET.get('movie_id')
-    sessions = Session.objects.filter(movie_id=movie_id).order_by('session')
-    session_options = '<option value="">請選擇電影場次</option>'
-    for session in sessions:
-        session_options += f'<option value="{session.pk}">{session.session}</option>'
-    return JsonResponse(session_options, safe=False)
 
 
 # def orderTicketConfirm(request):
