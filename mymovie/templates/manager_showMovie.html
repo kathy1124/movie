@@ -23,30 +23,38 @@
                 <div class="form-group">
                     <a style="font-weight: bold; font-size: larger;">{{ movie.movie_name }}詳細資訊</a>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="edit">
                     <label for="release-date" style="width: 20%;">上映日期</label>
-                    <div id="div1">
+                    <div>
                         <a>{{ movie.date }}</a>
                     </div>
-                    <div id="div2">
+                    <div>
                         <a>{{ movie.get_show_display  }}</a>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="edit">
                     <label for="actors">導演</label>
-                    <p>{{ movie.director }}</p>
+                    <div>
+                        <p>{{ movie.director }}</p>
+                    </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="edit">
                     <label for="genre">演員</label>
-                    <p id="p">{{ movie.actor }}</p>
+                    <div>
+                        <p id="p">{{ movie.actor }}</p>
+                    </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="edit">
                     <label for="duration">類型</label>
-                    <p>{{ movie.type }} </p>
+                    <div>
+                        <p>{{ movie.type }} </p>
+                    </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="edit">
                     <label for="showtimes">劇情片長</label>
-                    <p>{{ movie.length }}</p>
+                    <div>
+                        <p>{{ movie.length }}</p>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="image-url">圖片</label>

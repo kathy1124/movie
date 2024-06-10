@@ -218,10 +218,7 @@ nav ul li:last-child::after {
     border-radius: 4px; /* 圓角邊框 */
 }
 
-#p{
-    text-align: left;
-    margin-left: 100px;
-}
+
 
 .delete-button {
     background-color: #f44336; /* 刪除按鈕背景顏色 */
@@ -329,10 +326,9 @@ nav ul li:last-child::after {
 }
 
 .form-group > label {
-    width: 15%; /* 標籤寬度 */
     margin-right: 10px; /* 標籤和輸入框之間的距離 */
     color: #333; /* 標籤文本顏色 */
-    text-align: right; /* 標籤文本右對齊 */
+    text-align: left; /* 標籤文本右對齊 */
 }
 
 .form-group > div {
@@ -430,4 +426,8 @@ nav ul li:last-child::after {
 
 .confirm-button:hover, .cancel-button:hover {
     background-color: #333; /* 懸停背景顏色 */
+}
+
+#edit{
+    justify-content: flex-end;
 }
