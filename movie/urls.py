@@ -54,7 +54,7 @@ urlpatterns = [
     # 電影資訊
     path('movieInformation/', mv.movieInformation, name='movieInformation'),
     path('movieInformation/<int:movie_id>',
-         mv.movieInformationDetails, name='movieInformationDetails'),
+        mv.movieInformationDetails, name='movieInformationDetails'),
 
     #聯絡我們 聯絡資訊
     path('contactUs',mv.contact,name='contactUs'),
@@ -65,12 +65,12 @@ urlpatterns = [
     path('loginMember/', mv.loginMember, name='loginMember'),
     path('forgetMember/', mv.forgetMember, name='forgetMember'),
     path('logout/', mv.logout_view, name='logout'),
+    path('editpassword', mv.editPassword,name='editPassword'),
 
     # 快速購票
     path('orderTicket/', mv.orderTicket, name='orderTicket'),
     # path('orderTicketConfirm/', mv.orderTicketConfirm, name='orderTicketConfirm'),
     path('orderTicketRecord/', mv.orderTicketRecord, name='orderTicketRecord'),
-
 
     # 會員中心
     path('lookMember/', mv.lookMember, name='lookMember'),

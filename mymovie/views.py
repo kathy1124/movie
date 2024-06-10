@@ -391,6 +391,32 @@ def forgetMember(request):
         form = MemberForgetForm()
     return render(request, 'user_forget.html', {'form': form})
 
+
+def editPassword(request):
+    if request.method == 'POST':
+        form = MemberForgetForm(request.POST)
+        if form.is_valid():
+            member_id = form.cleaned_data['member_id'].strip()
+            member_pw = form.cleaned_data['member_pw']
+            member_pwc = form.cleaned_data['member_pwc']
+            if member_pw == member_pwc:
+                try:
+                    member = Member_data.objects.get(member_account=member_id)
+                    member.member_password = make_password(member_pw)
+                    member.save()
+                    return redirect('/lookMember/')
+                except Member_data.DoesNotExist:
+                    message = "帳號不存在"
+            else:
+                message = "新密碼與確認新密碼不一致"
+        else:
+            message = "表單內容有誤"
+        return render(request, 'user_edit.html', {'form': form, 'message': message})
+    else:
+        form = MemberForgetForm()
+    return render(request, 'user_edit.html', {'form': form})
+
+
 # 登出
 
 

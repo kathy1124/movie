@@ -1,0 +1,42 @@
+{% include 'header.html' %}
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>員工登入</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/relogforget.css' %}"/>
+</head>
+<body>
+    <main>
+        <section class="login">
+            <h2>修改密碼</h2>
+            {% if message %}
+            <div class='alert alert-warning'>{{ message }}</div>
+            {% endif %}
+            {% if form.member_pw.errors %}
+            <div class="alert alert-warning ">{{ form.member_pw.errors }}</div>
+            {% endif %}
+            <form action = "" method="post">
+                {% csrf_token %}
+                <div class="alert alert-warning"></div>
+                <div class="form-group">
+                    <label for="member_id">帳號</label>
+                    <input type="text" id="member_id" name="member_id" required>
+                </div>
+                <div class="form-group">
+                    <label for="member_pw">新密碼</label>
+                    <input type="password" id="member_pw" name="member_pw" required>
+                </div>
+                <p class="password-note">6-20位英數混合，英文區分大小寫</p>
+                <div class="form-group">
+                    <label for="member_pwc">確認新密碼</label>
+                    <input type="password" id="member_pwc" name="member_pwc" required>
+                </div>
+                <button type="submit">更改</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>
