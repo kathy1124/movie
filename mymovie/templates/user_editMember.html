@@ -1,18 +1,26 @@
 {% extends 'base.html' %}
-{% block headmessage %}
-<div class="main-content" style="text-align:center; align-items:center; justify-content: center; display: flex;">
-   <p style="font-size: 30px;margin: 0; height: 70px;text-align: center; display: flex;align-items: center; "> 編輯會員資料</p>
+{% block content %}
+<button id="backButton" class="back-button" onclick="history.back()">← 回上頁</button>
+<div class="member-info" style="text-align: center; margin: 20px; text-align: justify; font-size: 20px; background-color: #ccc; padding: 1em;">
+
+    <div class="member-info-item" style="margin: 10px;">
+        <label style="width: 100px; display: inline-block;">會員管理</label>
+    </div>
+    <div class="member-info-item" style="margin: 10px;">
+        <label style="width: 100px; display: inline-block;">電子信箱</label>
+        <label required>{{ form.gmail }}</label>
+    </div>
+    <div class="member-info-item" style="margin: 10px;">
+        <label style="width: 100px; display: inline-block;">手機號碼</label>
+        <label required>{{ form.phone_number }}</label>
+    </div>
+    
+
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+        <div class="member-info-item" style="margin: 10px;">
+            <label style="width: 100px; display: inline-block;"><a href="{% url 'forgetMember' %}">密碼修改</a></label>
+            <button style="width: 100px; display: inline-block; margin: 5px;" onclick="window.location.href='{% url 'lookMember' %}'">儲存</button>
+        </div>
+    </div>
 </div>
 {% endblock %}
-{% block content%}
-
-<form method="post">
-{% if message %}
-    <div class='alert alert-warning'>{{ message }}</div>
-{% endif %}
-{% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">儲存更改</button>
-</form>
-{% endblock %}
-
