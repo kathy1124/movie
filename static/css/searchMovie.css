@@ -74,91 +74,48 @@ nav ul li:last-child::after {
 }
 
 .search-bar {
-    display: flex; /* 設置為彈性容器 */
-    font-size:larger;
-    justify-content: center; /* 水平置中 */
-    align-items: center; /* 垂直置中 */
-    margin: 2% 0; /* 設置上下外邊距 */
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
 }
 
 .search-bar input {
-    width: 50%; /* 設置寬度為50% */
-    padding: 10px; /* 設置內邊距 */
-    font-size: 1rem; /* 設置字體大小 */
-    border: 1px solid #ccc; /* 設置邊框 */
-    height: 40px; /* 設置高度 */
-    box-sizing: border-box; /* 包含邊框和內邊距 */
+    width: 50%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
 }
 
-.search-bar .dropdown {
-    position: relative; /* 設置定位方式 */
-    display: inline-block; /* 設置為行內塊元素 */
-    margin-right: 1%; /* 設置右外邊距 */
+.dropdown {
+    position: relative;
+    display: inline-block;
 }
 
-.search-bar .dropbtn {
-    background-color: #fffefa; /* 設置按鈕背景顏色 */
-    color: #333; /* 設置按鈕文字顏色 */
-    font-size: 1rem; /* 設置字體大小 */
-    border: 1px solid #ccc; /* 設置邊框 */
-    cursor: pointer; /* 設置鼠標樣式 */
-    height: 40px; /* 設置高度 */
-    width: 120px; /* 設置寬度 */
-    box-sizing: border-box; /* 包含邊框和內邊距 */
-    border-radius: 5px;
-    padding: 0 10px; /* 設置內邊距 */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
 }
 
-.search-bar .dropdown-content {
-    display: none; /* 隱藏下拉內容 */
-    position: absolute; /* 絕對定位 */
-    background-color: #fff; /* 設置背景顏色 */
-    border-radius: 5px;
-    min-width: 120px; /* 設置最小寬度 */
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); /* 添加陰影效果 */
-    z-index: 1; /* 設置z-index */
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
 }
 
-.search-bar .dropdown-content a {
-    color: black; /* 設置連結文字顏色 */
-    padding: 12px 16px; /* 設置內邊距 */
-    text-decoration: none; /* 移除下劃線 */
-    display: block; /* 設置為塊級元素 */
+.dropdown:hover .dropdown-content {
+    display: block;
 }
 
-.search-bar .dropdown-content a:hover {
-    background-color: #f1f1f1; /* 滑過時改變背景顏色 */
-}
-
-.search-bar .form-control dropdown-toggle:hover .dropdown-content {
-    display: block; /* 滑過時顯示下拉內容 */
-}
-
-.search-bar .form-control dropdown-toggle:hover .dropbtn {
-    background-color: #d6dce3; /* 滑過時改變按鈕背景顏色 */
-}
-
-.search-bar .search-button {
-    background-color: #fffefa; /* 設置按鈕背景顏色 */
-    border: 1px solid #ccc; /* 設置邊框 */
-    cursor: pointer; /* 設置鼠標樣式 */
-    font-size: 1rem; /* 設置字體大小 */
-    height: 40px; /* 設置高度 */
-    padding: 0 10px; /* 設置內邊距 */
-    margin-left: -2px; /* 調整與輸入框的間距 */
-    box-sizing: border-box; /* 包含邊框和內邊距 */
-}
-
-.search-bar .add-movie-button {
-    background-color: #fffefa; /* 設置按鈕背景顏色 */
-    border-radius: 5px;
-    border: 1px solid #ccc; /* 設置邊框 */
-    cursor: pointer; /* 設置鼠標樣式 */
-    font-size: 1rem; /* 設置字體大小 */
-    margin-left: 1%; /* 設置左外邊距 */
-    height: 40px; /* 設置高度 */
-    padding: 0 10px; /* 設置內邊距 */
-    box-sizing: border-box; /* 包含邊框和內邊距 */
+.dropdown:hover .dropbtn {
+    background-color: #71a5e0;
 }
 
 .movie-list {

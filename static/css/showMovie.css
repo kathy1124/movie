@@ -145,7 +145,7 @@ nav ul li:last-child::after {
 }
 
 .edit-button, .delete-button {
-    background-color: #4CAF50; /* 編輯按鈕背景顏色 */
+    background-color: #F8F6EB; /* 編輯按鈕背景顏色 */
     border: none; /* 無邊框 */
     color: rgb(17, 16, 16); /* 按鈕文本顏色 */
     padding: 10px 20px; /* 內部填充 */
@@ -159,7 +159,7 @@ nav ul li:last-child::after {
 }
 
 .delete-button {
-    background-color: #f44336; /* 刪除按鈕背景顏色 */
+    background-color: #F8F6EB; /* 刪除按鈕背景顏色 */
 }
 
 #a{
@@ -221,7 +221,7 @@ nav ul li:last-child::after {
 
 
 .delete-button {
-    background-color: #f44336; /* 刪除按鈕背景顏色 */
+    background-color: #F8F6EB; /* 刪除按鈕背景顏色 */
 }
 
 
@@ -376,7 +376,7 @@ nav ul li:last-child::after {
 }
 
 .edit-button, .delete-button {
-    background-color: #4CAF50; /* 編輯按鈕背景顏色 */
+    background-color: #F8F6EB; /* 編輯按鈕背景顏色 */
     border: none; /* 無邊框 */
     color: rgb(17, 16, 16); /* 按鈕文本顏色 */
     padding: 10px 20px; /* 內部填充 */
@@ -390,7 +390,7 @@ nav ul li:last-child::after {
 }
 
 .delete-button {
-    background-color: #f44336; /* 刪除按鈕背景顏色 */
+    background-color: #F8F6EB; /* 刪除按鈕背景顏色 */
 }
 
 /* 刪除確認對話框 */

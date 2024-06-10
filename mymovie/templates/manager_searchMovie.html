@@ -14,9 +14,9 @@
         <button id="backButton" class="back-button" onclick="history.back()">← 回上頁</button>
         <form method="get">
             <div class="search-bar"> <!-- 搜索欄 -->
-                {{ movieFilter.form.search_type }}
-                {{ movieFilter.form.search_text }}<!-- 搜索輸入框 -->
-                <button class="search-button">🔍</button> <!-- 搜索按鈕 -->
+                {{ movieFilter.form.search_type }} {{ movieFilter.form.search_text }}<!-- 搜索輸入框 -->
+               
+                <button class="search-button" style="margin-left: 10px;margin-right: 10px;">🔍</button> <!-- 搜索按鈕 -->
                 <button class="add-movie-button"> <a href="{% url 'addMovie' %}" style="text-decoration: none; color: #000;">+ 新增電影</a></button> <!-- 新增電影按鈕 -->
             </div>
         </form>
@@ -38,7 +38,7 @@
                         <td>{{ movie.movie_name }}</td>
                         <td> {{ movie.date }}</td>
                         <td>{{ movie.type }}</td>
-                        <td><button class="details-button"><a href="{% url 'showMovie' movie.movie_no %}" style="text-decoration: none; color: #000;">詳細資料</a></button></td>
+                        <td><button class="details-button"><a href="{% url 'showMovie' movie.movie_no %}" style="text-decoration: none; color: #000; font-weight: bold;">詳細資料</a></button></td>
                     </tr>
                     {% endfor %}
                 </tbody>

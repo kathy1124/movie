@@ -12,7 +12,24 @@
 {% endblock %}
 
 {% block content %}
-<button id="backButton" class="back-button" onclick="history.back()">← 回上頁</button>
+<style>
+  .a{
+    position: absolute;
+    top: 15%; /* 以百分比定位到導航欄下方 */
+    left: 1%;
+    padding: 10px 20px;
+    font-size: 12px;
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1000; /* 保證按鈕在最上層 */
+  }
+</style>
+
+
+<button style="margin-top: 20px;" class="a" onclick="history.back()">← 回上頁</button>
 <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; text-align: justify;">
 
   <form method="POST" action="{% url 'searchTicket' %}" style="text-align: center;">

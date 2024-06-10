@@ -15,8 +15,8 @@
             <form method="post">
                 <button id="backButton" class="back-button" onclick="history.back()"><a href="{% url 'searchMovie' %}" style="text-decoration: none; color: white;">← 回上頁</a></button>
                 <div class="edit-delete-buttons">
-                    <button type="button" class="edit-button"><a href="{% url 'editMovie' movie.movie_no %}" style="text-decoration: none; color: black;">編輯</a></button>
-                    <button type="button" class="delete-button" onclick="showDeleteConfirmation()">刪除</button>
+                    <button type="button" class="edit-button" style="background-color: #F8F6EB;"><a href="{% url 'editMovie' movie.movie_no %}" style="text-decoration: none; font-weight: 550; color: black; font-size: 15px;">編輯</a></button>
+                    <button type="button" class="delete-button" style="background-color: #F8F6EB; font-weight: 600; color: black;font-weight: 550; color: black; font-size: 15px;" onclick="showDeleteConfirmation()">刪除</button>
                 </div>
 
                 {% csrf_token %}
