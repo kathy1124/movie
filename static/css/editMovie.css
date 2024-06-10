@@ -184,3 +184,12 @@ nav ul li:last-child::after {
 .delete-button {
     background-color: #f44336; /* 刪除按鈕背景顏色 */
 }
+
+#edit{
+    justify-content: flex-end;
+}
+
+#ed{
+    justify-content: flex-end;
+    margin-left: 45px;
+}

@@ -19,36 +19,49 @@
                 <button id="backButton" class="back-button" onclick="history.back()">← 回上頁</button>
                 {% csrf_token %}
                 <div class="form-group">
-                    <label for="release-date" style="width: 20%;">電影名稱</label>
-                    {{ form.movie_name }}
+                    <label for="release-date">電影名稱</label>
+                    <div id="edit">
+                        {{ form.movie_name }}
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="release-date" style="width: 20%;">上映日期</label>
-                    {{ form.date }}
-                </div>
-                <div class="form-group">
-                    <label for="director"></label>
-                    {{ form.show }}
+                <div class="form-group" id="edit">
+                    <label for="release-date">上映日期</label>
+                    <div id="ed">
+                        {{ form.date }}
+                    </div>
+                    <div id="edit">
+                        {{ form.show }}
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="actors">導演</label>
-                    {{ form.director }}
+                    <div id="edit">
+                        {{ form.director }}
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="genre">演員</label>
-                    {{ form.actor }}
+                    <div id="edit">
+                        {{ form.actor }}
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="duration">類型</label>
-                    {{ form.type }}
+                    <div id="edit">
+                        {{ form.type }}
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="showtimes">劇情片長</label>
-                    {{ form.length }}
+                    <div id="edit">
+                        {{ form.length }}
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="image-url">圖片</label>
-                    {{ form.picture }}
+                    <div  id="edit">
+                        {{ form.picture }}
+                    </div>
                 </div>
                 <div class="form-buttons">
                     <button type="submit">儲存</button>
