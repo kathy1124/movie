@@ -1,16 +1,34 @@
-<!-- templates/order_ticket.html -->
+{% extends 'base.html' %}
+
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <title>訂票</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>購票</title>
 </head>
+
 <body>
-    <h1>訂票</h1>
+{% block content %}
+<!-- Block for header message -->
+<div class="main-content" style="text-align: center; align-items: center; justify-content: center; display: flex;">
+  <p style="font-size: 30px; margin: 0; height: 70px; text-align: center; display: flex; align-items: center;">
+    購票
+  </p>
+</div>
+
+<!-- Block for form content -->
+<div class="member-info" style="text-align: center; margin: 20px auto; text-align: justify; font-size: 20px; background-color: #ccc; padding: 1em; max-width: 600px;">
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">提交</button>
+        <div class="member-info-item" style="margin: 10px;">
+            {{ form.as_p }}
+        </div>
+        <div class="member-info-item" style="margin: 10px;">
+            <button type="submit">提交</button>
+        </div>
     </form>
+</div>
+{% endblock %}
 </body>
 </html>
